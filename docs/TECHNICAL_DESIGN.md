@@ -6,8 +6,8 @@
 | **Track** | **AI Innovation Lab** |
 | **Author** | Sunil Gurjar |
 | **Version** | 1.0 — October 2026 |
-| **Source code** | GitHub: `<add your repository URL>` |
-| **Demo video** | YouTube: `<add your video URL>` |
+| **Source code** | GitHub: `https://github.com/sunilgurjar19/AI-Expense-and-Reimbursement-Agent` |
+| **Demo video** | YouTube: `https://www.youtube.com/watch?v=R_W8TpmYaWE` |
 | **Hosted instance** | Not hosted. Runs locally in about five minutes (see [§9 Setup & deployment](#9-setup--deployment)) |
 
 ---
