@@ -1,0 +1,154 @@
+# ---------------------------------------------------------------------------
+# Expense policy used by the agent's rule engine.
+# Amounts are in the base currency (see settings.yaml -> app.base_currency).
+# ---------------------------------------------------------------------------
+
+max_receipt_age_days: 90
+receipt_required_above: 300
+claim_requires_purpose: true
+weekend_expenses: "warn"          # "allow" | "warn"
+duplicate_detection:
+  amount_tolerance: 1.0           # absolute difference in base currency
+  date_window_days: 2
+  vendor_similarity: 0.75         # 0..1 fuzzy ratio
+
+# Fields every expense line needs before submission.
+required_fields: ["vendor", "date", "total_amount", "currency", "category"]
+
+# Words that mark an item as non-reimbursable.
+blocked_keywords: ["alcohol", "liquor", "beer", "wine", "whisky", "vodka", "rum",
+                   "cigarette", "tobacco", "spa", "minibar"]
+
+fx_rates:                          # 1 unit of currency = N base currency
+  INR: 1
+  USD: 83.2
+  EUR: 90.5
+  GBP: 105.4
+  AED: 22.6
+  SGD: 61.8
+  JPY: 0.56
+
+# Categories appear in this order in dropdowns. On a keyword tie the earlier one wins.
+# limit_per_item values are defaults - set them to your company's actual limits.
+categories:
+  # --- Company reimbursement heads -------------------------------------------
+  - key: broadband
+    label: "Broadband Reimbursement"
+    icon: "📶"
+    limit_per_item: 1500
+    keywords: ["broadband", "fibernet", "fiber", "fibre", "jiofiber", "airfiber", "wifi", "wi-fi",
+               "hathway", "excitel", "xstream", "act fibernet", "internet bill"]
+  - key: children_education
+    label: "Children Education Allowance"
+    icon: "🎒"
+    limit_per_item: 5000
+    requires: ["description"]
+    keywords: ["school", "school fees", "tuition", "tuition fee", "college", "education", "academy",
+               "admission", "term fee", "vidyalaya", "cbse", "विद्यालय", "शुल्क", "स्कूल", "शिक्षा"]
+  - key: field_incidentals
+    label: "Daily Field Incidental Expenses"
+    icon: "🧭"
+    limit_per_item: 1000
+    requires: ["business_purpose"]
+    keywords: ["incidental", "field visit", "field expenses", "daily allowance", "per diem"]
+  - key: fuel_car
+    label: "Fuel Expenses - Car"
+    icon: "🚗"
+    limit_per_item: 10000
+    keywords: ["petrol", "diesel", "fuel", "cng", "indian oil", "iocl", "bharat petroleum", "bpcl",
+               "hindustan petroleum", "hpcl", "jio-bp", "nayara", "shell", "car", "four wheeler",
+               "पेट्रोल", "डीजल", "डीज़ल", "डीझेल", "इंडियन ऑयल", "भारत पेट्रोलियम", "हिंदुस्तान पेट्रोलियम",
+               "पेट्रोल पंप", "सर्विस स्टेशन", "सर्विस सेंटर"]
+  - key: handset
+    label: "Handset Reimbursement"
+    icon: "📱"
+    limit_per_item: 25000
+    keywords: ["handset", "smartphone", "mobile phone", "iphone", "samsung galaxy", "oneplus", "redmi",
+               "xiaomi", "vivo", "oppo", "pixel", "croma", "reliance digital"]
+  - key: kit_allowance
+    label: "Kit Allowance"
+    icon: "🧰"
+    limit_per_item: 10000
+    requires: ["description"]
+    keywords: ["kit", "uniform", "safety shoes", "helmet", "safety gear", "ppe", "gloves", "jacket"]
+  - key: local_conveyance
+    label: "Local Conveyance & Toll Tax"
+    icon: "🚕"
+    limit_per_item: 3000
+    keywords: ["uber", "ola", "rapido", "taxi", "cab", "auto", "rickshaw", "parking", "toll", "toll tax",
+               "fastag", "nhai", "टोल", "टैक्सी", "ऑटो", "रिक्शा", "पार्किंग"]
+  - key: medical
+    label: "Medical Reimbursement"
+    icon: "💊"
+    limit_per_item: 15000
+    keywords: ["pharmacy", "chemist", "medical", "medicine", "medicines", "hospital", "clinic", "doctor",
+               "consultation", "diagnostic", "pathology", "apollo", "medplus", "netmeds", "pharmeasy", "1mg",
+               "दवा", "दवाई", "औषधि", "मेडिकल", "अस्पताल", "चिकित्सा", "डॉक्टर"]
+  - key: other
+    label: "Other Reimbursement"
+    icon: "🧾"
+    limit_per_item: 5000
+    requires: ["description"]
+    keywords: []
+  - key: medical_checkup_spouse
+    label: "Periodic Medical Checkup - Spouse"
+    icon: "🩺"
+    limit_per_item: 5000
+    keywords: ["health checkup", "health check-up", "health check", "checkup", "check-up", "preventive",
+               "full body", "master health", "wellness package", "health package", "spouse"]
+  - key: travel_assistance
+    label: "Travel Assistance"
+    icon: "🧳"
+    limit_per_item: 20000
+    requires: ["business_purpose"]
+    keywords: ["travel desk", "travel agent", "travel assistance", "visa", "forex", "passport",
+               "travel insurance", "booking fee", "makemytrip", "yatra", "cleartrip", "easemytrip"]
+  - key: fuel_two_wheeler
+    label: "Fuel Expenses - Two Wheeler"
+    icon: "🛵"
+    limit_per_item: 3000
+    excludes: ["diesel", "डीजल", "डीज़ल", "डीझेल", "cng"]   # two-wheelers don't run on these
+    keywords: ["petrol", "fuel", "indian oil", "iocl", "bharat petroleum", "bpcl", "hindustan petroleum",
+               "hpcl", "jio-bp", "nayara", "shell", "two wheeler", "two-wheeler", "bike", "scooter",
+               "motorcycle", "activa", "पेट्रोल", "इंडियन ऑयल", "दुपहिया", "बाइक", "स्कूटर"]
+
+  # --- Business travel & other ---------------------------------------------
+  - key: airfare
+    label: "Airfare"
+    icon: "✈️"
+    limit_per_item: 60000
+    keywords: ["airline", "indigo", "air india", "vistara", "boarding", "flight", "pnr", "akasa", "spicejet"]
+  - key: rail_bus
+    label: "Rail & Bus"
+    icon: "🚆"
+    limit_per_item: 15000
+    keywords: ["irctc", "railway", "train", "redbus", "bus", "metro"]
+  - key: lodging
+    label: "Hotel & Lodging"
+    icon: "🏨"
+    limit_per_item: 9000
+    keywords: ["hotel", "inn", "resort", "suites", "lodging", "stay", "oyo", "marriott", "taj", "hyatt"]
+  - key: meals
+    label: "Meals"
+    icon: "🍽️"
+    limit_per_item: 1500
+    requires: ["business_purpose"]
+    keywords: ["restaurant", "cafe", "coffee", "food", "swiggy", "zomato", "dine", "dinner", "lunch", "breakfast",
+               "kitchen", "bistro", "starbucks", "chai", "pub", "brewpub", "biryani", "pizza", "tikka"]
+  - key: client_entertainment
+    label: "Client Entertainment"
+    icon: "🤝"
+    limit_per_item: 10000
+    requires: ["attendees", "business_purpose"]
+    keywords: ["client", "entertainment", "guests"]
+  - key: office_supplies
+    label: "Office Supplies"
+    icon: "🖇️"
+    limit_per_item: 5000
+    keywords: ["stationery", "office", "printer", "paper", "amazon", "flipkart"]
+  - key: training
+    label: "Training & Courses"
+    icon: "🎓"
+    limit_per_item: 25000
+    requires: ["business_purpose"]
+    keywords: ["course", "training", "udemy", "coursera", "certification", "conference", "workshop"]

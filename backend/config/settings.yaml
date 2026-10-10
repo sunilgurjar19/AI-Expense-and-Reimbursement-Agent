@@ -1,0 +1,93 @@
+# ---------------------------------------------------------------------------
+# Expense & Reimbursement Agent - application configuration
+#
+# Every value here can be overridden with an environment variable using the
+# prefix ERA_ and "__" as the nesting delimiter, e.g.
+#   ERA_LLM__PROVIDER=claude
+#   ERA_LLM__CLAUDE__API_KEY=sk-ant-...
+#   ERA_SERVER__CORS_ORIGINS='["http://localhost:5200"]'
+# A local .env file (see .env.example) is loaded automatically.
+# ---------------------------------------------------------------------------
+
+app:
+  name: "Expense & Reimbursement Agent"
+  agent_name: "Rika"            # persona name shown in the chat UI
+  company: "Acme Corp"
+  base_currency: "INR"
+
+server:
+  host: "0.0.0.0"
+  port: 8100
+  api_prefix: "/api"
+  cors_origins:
+    - "http://localhost:5200"
+    - "http://127.0.0.1:5200"
+
+auth:
+  jwt_secret: "change-me-in-production-please-32b"
+  jwt_algorithm: "HS256"
+  token_ttl_minutes: 480
+  users_file: "data/users.json"
+  show_demo_users: true         # expose demo credentials on the login page
+
+storage:
+  database_file: "storage/db.json"
+  upload_dir: "storage/uploads"
+  max_upload_mb: 15
+  allowed_extensions: [".pdf", ".png", ".jpg", ".jpeg", ".webp", ".gif"]
+
+policy:
+  file: "config/policy.yaml"
+
+llm:
+  # Active provider: "ollama" | "claude" | "mock"
+  provider: "ollama"
+  # Providers tried, in order, if the active one fails.
+  fallback_chain: ["mock"]
+  temperature: 0.1
+  # Max number of documents processed by the LLM at the same time.
+  max_concurrency: 2
+
+  ollama:
+    base_url: "http://localhost:11434"
+    # Must support images. For Hindi/handwritten bills prefer a stronger OCR model,
+    # e.g. `ollama pull qwen2.5vl:7b` and set vision_model: "qwen2.5vl:7b".
+    vision_model: "gemma3:4b"
+    chat_model: "gemma3:4b"
+    timeout_seconds: 180
+    keep_alive: "10m"
+    # Also send zoomed-in halves of each page so small models can read handwriting.
+    zoom_tiles: true
+
+  claude:
+    api_key: ""                 # prefer ERA_LLM__CLAUDE__API_KEY or ANTHROPIC_API_KEY
+    vision_model: "claude-opus-5-5"   # receipt understanding (images + PDFs)
+    chat_model: "claude-opus-5-5"     # conversational agent
+    effort: "medium"            # low | medium | high | xhigh | max (extraction)
+    chat_effort: "low"          # effort for chat replies
+    max_tokens: 16000
+    timeout_seconds: 180
+    native_pdf: true            # send PDFs as native document blocks
+    server_fallbacks: true      # re-run declined requests on Anthropic's fallback model
+
+pipeline:
+  # Small pause between stages so users can follow progress in the UI.
+  stage_delay_ms: 450
+  pdf_render_dpi: 150
+  max_pdf_pages: 3
+  low_confidence_threshold: 0.6
+  # Second "verify" reading of a receipt:
+  #   auto   = when sanity checks fail or the document isn't in English (e.g. Hindi, handwritten memos)
+  #   always = every receipt (slowest, most accurate) · off = single pass
+  verify_mode: "auto"
+
+reimbursement:
+  # Mocked corporate finance system.
+  reference_prefix: "EXP"
+  manager_approval_required: true
+  auto_approve_below: 0          # 0 disables auto-approval
+  payout_delay_seconds: 25       # finance "pays" this long after approval
+
+notifications:
+  max_per_user: 200
+  heartbeat_seconds: 15

@@ -1,0 +1,242 @@
+@if (claim(); as c) {
+  <div class="workspace">
+    <!-- ================================================ header -->
+    <header class="ws-header">
+      <div class="title-block">
+        <a routerLink="/claims" class="back">← My claims</a>
+        @if (editingTitle()) {
+          <input #titleInput class="title-input" [value]="c.title" (blur)="renameClaim(titleInput.value)"
+                 (keydown.enter)="titleInput.blur()" (keydown.escape)="editingTitle.set(false)" autofocus />
+        } @else {
+          <h1 (click)="editable() && editingTitle.set(true)" [class.editable]="editable()" title="Click to rename">
+            {{ c.title }} @if (editable()) { <span class="pencil">✎</span> }
+          </h1>
+        }
+        <div class="meta">
+          @if (isNew()) {
+            <span class="unsaved" title="Nothing is saved until you add a receipt, chat, or save as draft">● Not saved yet</span>
+          } @else {
+            <app-status-pill [claimStatus]="c.status" />
+          }
+          <span>{{ c.receipts.length }} file{{ c.receipts.length === 1 ? '' : 's' }}</span>
+          @if (c.purpose) {
+            <span class="purpose" [title]="c.purpose">📝 {{ c.purpose }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="header-total">
+        <span class="subtle">Reimbursable</span>
+        <strong><app-count-up [value]="c.total_reimbursable" [currency]="c.currency" /></strong>
+        @if (c.total_claimed !== c.total_reimbursable) {
+          <span class="claimed">of {{ c.total_claimed | money: c.currency }} claimed</span>
+        }
+      </div>
+
+      <div class="header-actions">
+        @if (editable()) {
+          @if (confirmDelete()) {
+            <div class="confirm-delete" animate.enter="enter-pop">
+              <span>Delete this claim{{ c.receipts.length ? ' and its ' + c.receipts.length + ' receipt(s)' : '' }}?</span>
+              <button class="btn btn-ghost btn-sm" (click)="confirmDelete.set(false)">Cancel</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteClaim()">Delete</button>
+            </div>
+          } @else {
+            @if (!isNew()) {
+              <button class="btn btn-ghost delete-btn" title="Delete this claim and its receipts"
+                      (click)="confirmDelete.set(true)">🗑 Delete draft</button>
+            }
+            <button class="btn btn-soft" [disabled]="saving()" (click)="saveDraft()">
+              @if (saving()) { <span class="spinner"></span> } @else { 💾 } Save as draft
+            </button>
+          }
+        }
+        @if (c.receipts.length) {
+          <a class="btn btn-ghost" [href]="exportUrl()" download>⬇ Export</a>
+        }
+        <button class="btn btn-primary btn-lg submit-btn" [class.glow]="c.status === 'ready'"
+                [disabled]="c.status !== 'ready'" (click)="showSubmit.set(true)">
+          🚀 Submit claim
+        </button>
+      </div>
+    </header>
+
+    <app-claim-journey [status]="c.status" [readiness]="c.readiness" />
+
+    <!-- ================================================ body -->
+    <div class="ws-body">
+      <app-chat-panel class="col-chat"
+        [messages]="messages()"
+        [questions]="c.questions"
+        [agentName]="policy.agentName()"
+        [processing]="processingCount()"
+        [thinking]="thinking()"
+        [answering]="answering()"
+        [disabled]="!editable()"
+        (answered)="answer($event)"
+        (send)="chat($event)"
+        (attach)="upload($event)" />
+
+      <section class="col-receipts">
+        @if (policy.config()?.llm_provider === 'mock' && editable()) {
+          <div class="engine-warning" animate.enter="enter-fade-up">
+            <span>⚠️</span>
+            <p>
+              <strong>Offline engine active.</strong> It only reads PDFs with a text layer - photos and scanned
+              bills will come back empty.
+            </p>
+            <a routerLink="/settings" class="btn btn-soft btn-sm">Switch engine</a>
+          </div>
+        }
+        <app-drop-zone [compact]="receipts().length > 0" [progress]="uploadProgress()" [disabled]="!editable()"
+                       (files)="upload($event)" />
+
+        @if (receipts().length) {
+          <div class="section-head">
+            <h3>Receipts <span class="count">{{ receipts().length }}</span></h3>
+            <div class="legend">
+              @if (processingCount()) {
+                <span class="chip brand"><span class="spinner"></span> {{ processingCount() }} processing</span>
+              }
+              @if (attentionCount()) {
+                <span class="chip warn">⚠ {{ attentionCount() }} need attention</span>
+              }
+              <a class="btn btn-soft btn-sm" [href]="zipUrl()" download title="Download every uploaded document">
+                ⬇ Download all
+              </a>
+            </div>
+          </div>
+          <div class="receipt-grid">
+            @for (r of receipts(); track r.id) {
+              <app-receipt-card animate.enter="enter-pop" animate.leave="leave-fade"
+                [receipt]="r" [currency]="c.currency" [fileUrl]="fileUrl(r)" [downloadUrl]="downloadUrl(r)"
+                [category]="policy.category(r.data.category)"
+                (open)="selectedReceiptId.set(r.id)" (view)="viewDocument(r)" />
+            }
+          </div>
+        } @else {
+          <div class="tips">
+            <div class="tip"><span>📸</span>Snap paper bills with your phone - blurry is OK.</div>
+            <div class="tip"><span>🧾</span>Mix PDFs, e-tickets and screenshots in one go.</div>
+            <div class="tip"><span>🌍</span>Foreign currency is converted at policy rates.</div>
+          </div>
+        }
+      </section>
+
+      <aside class="col-summary">
+        <div class="card summary-card">
+          <div class="ring-row">
+            <app-readiness-ring [value]="c.readiness" [size]="112" label="ready" />
+            <div>
+              <strong class="ring-title">
+                @switch (c.status) {
+                  @case ('ready') { All set! 🎉 }
+                  @case ('processing') { Reading receipts… }
+                  @case ('needs_attention') { A few things left }
+                  @case ('submitted') { Submitted 🚀 }
+                  @case ('approved') { Approved 👍 }
+                  @case ('paid') { Reimbursed 💸 }
+                  @default { Let's get started }
+                }
+              </strong>
+              <p class="muted small">
+                {{ c.questions.length ? c.questions.length + ' question(s) for you' : 'No open questions' }}
+              </p>
+            </div>
+          </div>
+
+          <ul class="checklist">
+            @for (item of c.checklist; track item.key) {
+              <li [class.done]="item.done">
+                <span class="check">{{ item.done ? '✓' : '' }}</span>{{ item.label }}
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="card summary-card remarks">
+          <div class="remarks-head">
+            <h4>Remarks</h4>
+            @if (c.purpose_source === 'agent' && !editingRemarks()) {
+              <span class="ai-tag" [title]="'Written by ' + policy.agentName() + ' from your receipts'">✨ by {{ policy.agentName() }}</span>
+            }
+          </div>
+          @if (c.purpose_inferring) {
+            <div class="inferring" animate.enter="enter-fade-up">
+              <span class="spinner"></span> Working out what these expenses were for…
+            </div>
+          } @else if (editingRemarks()) {
+            <textarea #remarksInput class="textarea" rows="3" maxlength="500" [value]="c.purpose ?? ''"
+                      placeholder="e.g. Client visit to Pune for the Q4 workshop"></textarea>
+            <div class="remarks-actions">
+              <button class="btn btn-ghost btn-sm" (click)="editingRemarks.set(false)">Cancel</button>
+              <button class="btn btn-primary btn-sm" [disabled]="savingRemarks()" (click)="saveRemarks(remarksInput.value)">
+                @if (savingRemarks()) { <span class="spinner"></span> } Save
+              </button>
+            </div>
+          } @else if (c.purpose) {
+            <p class="remarks-text" animate.enter="enter-fade-up">{{ c.purpose }}</p>
+            @if (editable()) {
+              <button class="link-btn" (click)="editingRemarks.set(true)">✎ Edit remarks</button>
+            }
+          } @else {
+            <p class="muted small">{{ policy.agentName() }} will fill this in once your receipts are read.</p>
+            @if (editable()) {
+              <button class="link-btn" (click)="editingRemarks.set(true)">＋ Write it yourself</button>
+            }
+          }
+        </div>
+
+        @if (c.groups.length) {
+          <div class="card summary-card">
+            <h4>By category</h4>
+            <div class="groups">
+              @for (g of c.groups; track g.category) {
+                <div class="group" animate.enter="enter-fade-up">
+                  <span class="g-icon">{{ g.icon }}</span>
+                  <div class="g-text">
+                    <span>{{ g.label }}</span>
+                    <small>{{ g.count }} item{{ g.count === 1 ? '' : 's' }}</small>
+                  </div>
+                  <strong>{{ g.total | money: c.currency }}</strong>
+                </div>
+              }
+            </div>
+            @if (c.period_start) {
+              <p class="subtle period">🗓 {{ c.period_start | date: 'dd MMM' }} → {{ c.period_end | date: 'dd MMM yyyy' }}</p>
+            }
+          </div>
+        }
+      </aside>
+    </div>
+  </div>
+
+  @if (selectedReceipt(); as r) {
+    <app-receipt-drawer
+      [receipt]="r" [fileUrl]="fileUrl(r)" [downloadUrl]="downloadUrl(r)" [editable]="editable()" [currency]="c.currency"
+      (view)="selectedReceiptId.set(null); viewDocument(r)"
+      (closed)="selectedReceiptId.set(null)"
+      (save)="saveReceipt(r, $event)"
+      (remove)="removeReceipt(r)"
+      (retry)="retryReceipt(r)" />
+  }
+
+  @if (viewerIndex() !== null) {
+    <app-attachment-viewer [attachments]="attachments()" [startIndex]="viewerIndex()!" (closed)="viewerIndex.set(null)" />
+  }
+
+  @if (showSubmit()) {
+    <app-submit-dialog [claim]="c" (closed)="showSubmit.set(false)" (submitted)="submitted($event)" />
+  }
+} @else if (loadError()) {
+  <div class="page center-state">
+    <div class="big-emoji">😕</div>
+    <h2>{{ loadError() }}</h2>
+    <a routerLink="/claims" class="btn btn-soft">Back to my claims</a>
+  </div>
+} @else {
+  <div class="page center-state">
+    <div class="agent-orb"></div>
+    <p class="muted">Preparing your workspace…</p>
+  </div>
+}

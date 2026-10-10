@@ -1,0 +1,172 @@
+@if (claim(); as c) {
+  <div class="page">
+    <a [routerLink]="isApproval() ? '/approvals' : '/claims'" class="back">← {{ isApproval() ? 'Approvals' : 'My claims' }}</a>
+
+    <header class="head card">
+      <div class="head-main">
+        <div class="head-top">
+          <app-status-pill [claimStatus]="c.status" />
+          @if (c.reference_no) { <span class="ref">{{ c.reference_no }}</span> }
+        </div>
+        <h1>{{ c.title }}</h1>
+        @if (c.purpose) { <p class="muted"><strong>Remarks:</strong> {{ c.purpose }}</p> }
+        <p class="subtle">
+          {{ activeReceipts().length }} expenses · {{ c.period_start | date: 'dd MMM' }} → {{ c.period_end | date: 'dd MMM yyyy' }}
+          @if (c.submitted_at) { · submitted {{ c.submitted_at | relativeTime }} }
+        </p>
+      </div>
+      <div class="head-amount">
+        <span class="subtle">Reimbursable</span>
+        <strong>{{ c.total_reimbursable | money: c.currency }}</strong>
+        @if (c.total_claimed !== c.total_reimbursable) {
+          <span class="subtle">of {{ c.total_claimed | money: c.currency }} claimed</span>
+        }
+        <div class="head-actions">
+          @if (!isApproval()) {
+            <a class="btn btn-ghost btn-sm" [href]="exportUrl()" download>⬇ Export CSV</a>
+          }
+          @if (c.status === 'rejected' && !isApproval()) {
+            <button class="btn btn-primary btn-sm" (click)="reopen()">✎ Fix & resubmit</button>
+          }
+        </div>
+      </div>
+    </header>
+
+    @if (canDecide()) {
+      <section class="decision card" animate.enter="enter-fade-up">
+        <div class="decision-copy">
+          <h3>Your decision</h3>
+          <p class="muted">
+            {{ flagged().length ? flagged().length + ' item(s) carry policy notes - review them below.' : 'No policy concerns detected by the agent.' }}
+          </p>
+        </div>
+        <textarea class="textarea" placeholder="Comment for the employee (required when returning)"
+                  [ngModel]="comment()" (ngModelChange)="comment.set($event)"></textarea>
+        <div class="decision-actions">
+          <button class="btn btn-danger" [disabled]="deciding()" (click)="decide('reject')">↩ Return</button>
+          <button class="btn btn-success" [disabled]="deciding()" (click)="decide('approve')">
+            @if (deciding()) { <span class="spinner"></span> } ✓ Approve
+          </button>
+        </div>
+      </section>
+    }
+
+    <div class="layout">
+      <div class="main-col">
+      <section class="card items">
+        <h3>Expenses</h3>
+        <table>
+          <thead>
+            <tr><th>Expense</th><th>Date</th><th class="num">Amount</th><th class="num">Reimbursable</th></tr>
+          </thead>
+          <tbody class="stagger">
+            @for (r of activeReceipts(); track r.id) {
+              <tr>
+                <td>
+                  <div class="expense">
+                    <span class="cat">{{ policy.category(r.data.category)?.icon ?? '🧾' }}</span>
+                    <div>
+                      <button class="link" (click)="openAttachment(r.id)" title="View document"><strong>{{ r.data.vendor ?? r.file_name }}</strong> 📎</button>
+                      <small>{{ policy.category(r.data.category)?.label }}{{ r.data.business_purpose ? ' · ' + r.data.business_purpose : '' }}</small>
+                      @for (f of r.flags; track f.code) {
+                        @if (f.severity !== 'info') { <span class="flag" [class]="'flag ' + f.severity">{{ f.message }}</span> }
+                      }
+                      @if (r.justification) { <span class="just">💬 “{{ r.justification }}”</span> }
+                    </div>
+                  </div>
+                </td>
+                <td class="date">{{ r.data.date | date: 'dd MMM yyyy' }}</td>
+                <td class="num">{{ r.data.total_amount | money: (r.data.currency ?? c.currency) }}</td>
+                <td class="num strong">{{ r.reimbursable_amount | money: c.currency }}</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr><td colspan="3">Total reimbursable</td><td class="num">{{ c.total_reimbursable | money: c.currency }}</td></tr>
+          </tfoot>
+        </table>
+      </section>
+
+      <section class="card attachments">
+        <div class="att-head">
+          <h3>Attachments <span class="count">{{ attachments().length }}</span></h3>
+          @if (attachments().length) {
+            <a class="btn btn-soft btn-sm" [href]="zipUrl()" download>⬇ Download all (.zip)</a>
+          }
+        </div>
+        @if (attachments().length) {
+          <div class="att-grid stagger">
+            @for (a of attachments(); track a.id; let i = $index) {
+              <div class="att">
+                <button class="att-thumb" (click)="viewerIndex.set(i)" [attr.aria-label]="'View ' + a.name">
+                  @if (a.mimeType.startsWith('image/')) {
+                    <img [src]="a.viewUrl" [alt]="a.name" loading="lazy" />
+                  } @else {
+                    <span class="pdf">PDF</span>
+                  }
+                  <span class="zoom">👁 View</span>
+                </button>
+                <div class="att-info">
+                  <strong [title]="a.name">{{ a.name }}</strong>
+                  <small>{{ a.subtitle }}</small>
+                </div>
+                <div class="att-actions">
+                  <button class="btn btn-ghost btn-sm" (click)="viewerIndex.set(i)">View</button>
+                  <a class="btn btn-ghost btn-sm" [href]="a.downloadUrl" download>⬇ Download</a>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="muted">No documents attached.</p>
+        }
+      </section>
+      </div>
+
+      <aside class="side">
+        <section class="card timeline-card">
+          <h3>Status timeline</h3>
+          <ol class="timeline">
+            @for (t of c.timeline; track $index; let last = $last) {
+              <li [class.current]="last" [style.animation-delay.ms]="$index * 90">
+                <span class="dot">{{ timelineIcon[t.status] ?? '•' }}</span>
+                <div>
+                  <strong>{{ t.label }}</strong>
+                  <small>{{ t.actor }} · {{ t.at | relativeTime }}</small>
+                  @if (t.note) { <p>{{ t.note }}</p> }
+                </div>
+              </li>
+            }
+            @if (c.status === 'submitted') {
+              <li class="pending"><span class="dot">⏳</span><div><strong>Manager decision</strong><small>Pending</small></div></li>
+            }
+            @if (c.status === 'approved') {
+              <li class="pending"><span class="dot">⏳</span><div><strong>Payout</strong><small>Finance is processing…</small></div></li>
+            }
+          </ol>
+        </section>
+
+        @if (c.groups.length) {
+          <section class="card">
+            <h3>By category</h3>
+            @for (g of c.groups; track g.category) {
+              <div class="cat-row">
+                <span>{{ g.icon }} {{ g.label }}</span>
+                <div class="cat-bar"><i [style.width.%]="(g.total / maxGroup()) * 100"></i></div>
+                <strong>{{ g.total | money: c.currency : true }}</strong>
+              </div>
+            }
+          </section>
+        }
+      </aside>
+    </div>
+  </div>
+  @if (viewerIndex() !== null) {
+    <app-attachment-viewer [attachments]="attachments()" [startIndex]="viewerIndex()!" (closed)="viewerIndex.set(null)" />
+  }
+  @if (celebrate()) { <app-confetti /> }
+} @else if (error()) {
+  <div class="page center"><h2>😕 {{ error() }}</h2><a routerLink="/claims" class="btn btn-soft">Back</a></div>
+} @else {
+  <div class="page"><div class="skeleton" style="height: 160px; margin-bottom: 16px"></div><div class="skeleton" style="height: 320px"></div></div>
+}

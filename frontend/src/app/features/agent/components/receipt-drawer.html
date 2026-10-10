@@ -1,0 +1,189 @@
+@let r = receipt();
+@let f = form();
+<div class="backdrop" animate.enter="fade-in" animate.leave="fade-out" (click)="closed.emit()"></div>
+
+<aside class="drawer" animate.enter="drawer-in" animate.leave="drawer-out" role="dialog" aria-label="Receipt details">
+  <header>
+    <div>
+      <h3>{{ r.data.vendor ?? r.file_name }}</h3>
+      @if (r.data.vendor_local || r.data.language) {
+        <p class="printed">
+          @if (r.data.vendor_local) { As printed: <strong>{{ r.data.vendor_local }}</strong> }
+          @if (r.data.language) { <span class="lang">🌐 {{ r.data.language }}</span> }
+        </p>
+      }
+      <div class="sub">
+        <app-status-pill [receiptStatus]="r.status" />
+        <span class="subtle">{{ r.file_name }} · {{ (r.size_bytes / 1024).toFixed(0) }} KB</span>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-icon" (click)="closed.emit()" aria-label="Close">✕</button>
+  </header>
+
+  <div class="scroll">
+    <div class="preview">
+      @if (isImage()) {
+        <img [src]="fileUrl()" [alt]="r.file_name" />
+      } @else {
+        <iframe [src]="pdfUrl()" title="Receipt PDF"></iframe>
+      }
+      <div class="doc-bar">
+        <button type="button" (click)="view.emit()">👁 View full size</button>
+        <a [href]="downloadUrl()" download>⬇ Download</a>
+        <a [href]="fileUrl()" target="_blank" rel="noopener">Open in new tab ↗</a>
+      </div>
+    </div>
+
+    @if (r.flags.length || r.error) {
+      <section class="flags">
+        @if (r.error) {
+          <div class="flag error">⛔ {{ r.error }}</div>
+        }
+        @for (flag of r.flags; track flag.code) {
+          <div class="flag" [class]="'flag ' + flag.severity">
+            {{ flag.severity === 'error' ? '⛔' : flag.severity === 'warning' ? '⚠️' : 'ℹ️' }} {{ flag.message }}
+          </div>
+        }
+      </section>
+    }
+
+    <section class="amount-box">
+      <div>
+        <span class="subtle">Claimed</span>
+        <strong>{{ r.amount_in_base | money: currency() }}</strong>
+      </div>
+      <div class="arrow">→</div>
+      <div>
+        <span class="subtle">Reimbursable</span>
+        <strong class="good">{{ r.reimbursable_amount | money: currency() }}</strong>
+      </div>
+    </section>
+
+    <form class="fields" (ngSubmit)="submit()">
+      <fieldset [disabled]="!editable() || r.status === 'processing'">
+        <div class="grid">
+          <div class="field span-2">
+            <label>{{ labels['vendor'] }} <ng-container *ngTemplateOutlet="conf; context: { $implicit: 'vendor' }" /></label>
+            <input class="input" name="vendor" [ngModel]="f.vendor" (ngModelChange)="set('vendor', $event)" />
+          </div>
+
+          <div class="field">
+            <label>{{ labels['total_amount'] }} <ng-container *ngTemplateOutlet="conf; context: { $implicit: 'total_amount' }" /></label>
+            <input class="input" type="number" step="0.01" name="total_amount" [ngModel]="f.total_amount"
+                   (ngModelChange)="set('total_amount', $event)" />
+          </div>
+          <div class="field">
+            <label>{{ labels['currency'] }}</label>
+            <select class="select" name="currency" [ngModel]="f.currency" (ngModelChange)="set('currency', $event)">
+              <option [ngValue]="null" disabled>Select</option>
+              @for (cur of policy.config()?.currencies ?? []; track cur) {
+                <option [ngValue]="cur">{{ cur }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field">
+            <label>{{ labels['date'] }} <ng-container *ngTemplateOutlet="conf; context: { $implicit: 'date' }" /></label>
+            <input class="input" type="date" name="date" [ngModel]="f.date" (ngModelChange)="set('date', $event)" />
+          </div>
+          <div class="field">
+            <label>{{ labels['category'] }}</label>
+            <select class="select" name="category" [ngModel]="f.category" (ngModelChange)="set('category', $event)">
+              <option [ngValue]="null" disabled>Select</option>
+              @for (cat of policy.categories(); track cat.key) {
+                <option [ngValue]="cat.key">{{ cat.icon }} {{ cat.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field">
+            <label>{{ labels['tax_amount'] }}</label>
+            <input class="input" type="number" step="0.01" name="tax_amount" [ngModel]="f.tax_amount"
+                   (ngModelChange)="set('tax_amount', $event)" />
+          </div>
+          @for (key of textFields.slice(1); track key) {
+            <div class="field">
+              <label>{{ labels[key] }}</label>
+              <input class="input" [name]="key" [ngModel]="f[key]" (ngModelChange)="set(key, $event)" />
+            </div>
+          }
+
+          <div class="field span-2">
+            <label>{{ labels['description'] }}</label>
+            <input class="input" name="description" [ngModel]="f.description" (ngModelChange)="set('description', $event)" />
+          </div>
+          <div class="field span-2">
+            <label>
+              {{ labels['business_purpose'] }}
+              @if (r.purpose_inherited) { <span class="inherited">from claim remarks</span> }
+            </label>
+            <input class="input" name="business_purpose" [ngModel]="f.business_purpose"
+                   (ngModelChange)="set('business_purpose', $event)" placeholder="Why was this expense needed?" />
+          </div>
+          <div class="field span-2">
+            <label>{{ labels['attendees'] }}</label>
+            <input class="input" name="attendees" [ngModel]="f.attendees" (ngModelChange)="set('attendees', $event)"
+                   placeholder="For meals & entertainment" />
+          </div>
+          <div class="field span-2">
+            <label>Justification for approver</label>
+            <textarea class="textarea" name="justification" [ngModel]="f.justification"
+                      (ngModelChange)="set('justification', $event)" placeholder="Needed for over-limit or late receipts"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      @if (r.data.line_items.length) {
+        <section class="lines">
+          <h4>Line items</h4>
+          @for (item of r.data.line_items; track $index) {
+            <div class="line">
+              <span>
+                {{ item.description }}
+                @if (item.quantity && item.unit_price) {
+                  <small>{{ item.quantity }} × {{ item.unit_price | money: (r.data.currency ?? currency()) }}</small>
+                }
+              </span>
+              <span>{{ item.amount | money: (r.data.currency ?? currency()) }}</span>
+            </div>
+          }
+        </section>
+      }
+
+      <p class="source subtle">
+        Read by <strong>{{ r.extraction_source ?? '—' }}</strong>
+        @if (r.extraction_notes) { · {{ r.extraction_notes }} }
+      </p>
+
+      @if (editable()) {
+        <footer>
+          @if (confirmDelete()) {
+            <span class="confirm">Delete this receipt?</span>
+            <button type="button" class="btn btn-danger btn-sm" (click)="remove.emit()">Yes, delete</button>
+            <button type="button" class="btn btn-ghost btn-sm" (click)="confirmDelete.set(false)">Cancel</button>
+          } @else {
+            <button type="button" class="btn btn-ghost btn-sm" (click)="confirmDelete.set(true)">🗑 Delete</button>
+            <button type="button" class="btn btn-ghost btn-sm" (click)="toggleExcluded()">
+              {{ r.excluded ? '↩ Include' : '⊘ Exclude' }}
+            </button>
+            <button type="button" class="btn btn-soft btn-sm" [disabled]="r.status === 'processing'"
+                    title="Read this receipt again with the AI" (click)="retry.emit()">
+              ↻ {{ r.status === 'failed' ? 'Retry' : 'Re-read' }}
+            </button>
+            <span class="spacer"></span>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!dirty()">Save changes</button>
+          }
+        </footer>
+      }
+    </form>
+  </div>
+</aside>
+
+<ng-template #conf let-field>
+  @let value = confidence(field);
+  @if (value !== null) {
+    <span class="conf" [class.low]="value < 60" [title]="'AI confidence ' + value + '%'">
+      <i [style.width.%]="value"></i>
+    </span>
+  }
+</ng-template>

@@ -1,0 +1,73 @@
+<div class="chat card">
+  <header class="chat-head">
+    <div class="agent-avatar">
+      <span>✦</span>
+      <i class="presence"></i>
+    </div>
+    <div>
+      <strong>{{ agentName() }}</strong>
+      <span class="status">
+        @if (processing()) {
+          Reading {{ processing() }} receipt{{ processing() === 1 ? '' : 's' }}…
+        } @else if (thinking()) {
+          Thinking…
+        } @else {
+          Your reimbursement assistant
+        }
+      </span>
+    </div>
+  </header>
+
+  <div class="messages" #scroller>
+    @for (m of messages(); track m.id) {
+      <div class="msg" [class]="'msg ' + m.role" animate.enter="enter-fade-up">
+        @if (m.role === 'agent') {
+          <span class="mini-avatar">✦</span>
+        }
+        <div class="bubble">
+          <div [innerHTML]="m.text | markdownLite"></div>
+          <time>{{ m.created_at | relativeTime }}</time>
+        </div>
+      </div>
+    }
+
+    @if (processing() || thinking()) {
+      <div class="msg agent" animate.enter="enter-fade-up" animate.leave="leave-fade">
+        <span class="mini-avatar">✦</span>
+        <div class="bubble typing"><i></i><i></i><i></i></div>
+      </div>
+    }
+
+    @if (questions().length && !disabled()) {
+      <div class="questions">
+        <div class="q-head">
+          <span>Quick questions</span>
+          <span class="q-count">{{ questions().length }} left</span>
+        </div>
+        @for (q of questions(); track q.id; let first = $first) {
+          <app-question-card animate.enter="enter-fade-up" animate.leave="leave-fade"
+            [question]="q" [active]="first" [busy]="answering() === q.id"
+            (answered)="answered.emit({ question: q, value: $event })" />
+        }
+      </div>
+    }
+  </div>
+
+  <footer class="composer">
+    <div class="prompts">
+      @for (p of quickPrompts; track p) {
+        <button class="prompt" type="button" [disabled]="thinking() || disabled()" (click)="submit(p)">{{ p }}</button>
+      }
+    </div>
+    <form class="input-row" (ngSubmit)="submit()">
+      <label class="attach" title="Attach receipts" [class.disabled]="disabled()">
+        📎
+        <input type="file" multiple accept=".pdf,image/*" (change)="onAttach($event)" [disabled]="disabled()" hidden />
+      </label>
+      <input class="input" name="draft" [ngModel]="draft()" (ngModelChange)="draft.set($event)"
+             [placeholder]="disabled() ? 'This claim is locked' : 'Ask ' + agentName() + ' or answer in your own words…'"
+             [disabled]="disabled()" autocomplete="off" />
+      <button class="send" type="submit" [disabled]="!draft().trim() || thinking() || disabled()" aria-label="Send">➤</button>
+    </form>
+  </footer>
+</div>

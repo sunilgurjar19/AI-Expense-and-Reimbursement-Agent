@@ -1,0 +1,122 @@
+<div class="page">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">AI reimbursement assistant</span>
+      <h1>Good to see you, {{ firstName() }} 👋</h1>
+      <p>Drop a pile of bills and I'll read, sort and policy-check them - you'll be ready to submit in minutes.</p>
+      <div class="hero-actions">
+        <a routerLink="/agent" class="btn btn-lg cta">✨ Start a new claim</a>
+        @if (data()?.pending_questions) {
+          <a routerLink="/claims" class="pending">💬 {{ data()?.pending_questions }} question(s) waiting for you</a>
+        }
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit">
+        <span class="o1">🧾</span><span class="o2">✈️</span><span class="o3">🏨</span><span class="o4">🚕</span>
+      </div>
+      <div class="core">✦</div>
+    </div>
+  </section>
+
+  @if (data(); as d) {
+    <section class="kpis stagger">
+      <div class="kpi card">
+        <span class="kpi-label">Drafts in progress</span>
+        <strong class="kpi-value"><app-count-up [value]="d.drafts" /></strong>
+        <span class="kpi-foot">{{ d.receipts_processed }} receipts read so far</span>
+      </div>
+      <div class="kpi card">
+        <span class="kpi-label">Ready to submit</span>
+        <strong class="kpi-value"><app-count-up [value]="d.ready_to_submit" /></strong>
+        <span class="kpi-foot">Passed every policy check</span>
+      </div>
+      <div class="kpi card">
+        <span class="kpi-label">Awaiting reimbursement</span>
+        <strong class="kpi-value"><app-count-up [value]="d.in_flight_amount" [currency]="d.currency" [compact]="true" /></strong>
+        <span class="kpi-foot">Submitted or approved</span>
+      </div>
+      <div class="kpi card">
+        <span class="kpi-label">Reimbursed</span>
+        <strong class="kpi-value"><app-count-up [value]="d.reimbursed_amount" [currency]="d.currency" [compact]="true" /></strong>
+        <span class="kpi-foot">Paid to your account</span>
+      </div>
+      @if (auth.isManager()) {
+        <a class="kpi card card-hover manager" routerLink="/approvals">
+          <span class="kpi-label">Pending approvals</span>
+          <strong class="kpi-value"><app-count-up [value]="d.pending_approvals" /></strong>
+          <span class="kpi-foot">Review your team's claims →</span>
+        </a>
+      }
+    </section>
+
+    <section class="grid">
+      <div class="card panel">
+        <header>
+          <h3>Spend by category</h3>
+          <span class="subtle">{{ categoryTotal() | money: d.currency }} across all claims</span>
+        </header>
+        @if (d.by_category.length) {
+          <div class="bars" role="list">
+            @for (c of d.by_category; track c.category; let i = $index) {
+              <div class="bar-row" role="listitem" (mouseenter)="hovered.set(c.category)" (mouseleave)="hovered.set(null)"
+                   [class.dim]="hovered() && hovered() !== c.category">
+                <span class="bar-label">{{ c.icon }} {{ c.label }}</span>
+                <div class="bar-track">
+                  <div class="bar" [style.width.%]="(c.total / categoryMax()) * 100" [style.animation-delay.ms]="i * 70"></div>
+                  @if (hovered() === c.category) {
+                    <div class="tooltip" animate.enter="enter-pop">
+                      <strong>{{ c.total | money: d.currency }}</strong> · {{ share(c.total) }}% of spend
+                    </div>
+                  }
+                </div>
+                <span class="bar-value">{{ c.total | money: d.currency : true }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty">
+            <span>📊</span>
+            <p>Your spending breakdown appears after your first claim.</p>
+          </div>
+        }
+      </div>
+
+      <div class="card panel">
+        <header>
+          <h3>Recent claims</h3>
+          <a routerLink="/claims" class="subtle-link">View all →</a>
+        </header>
+        @if (d.recent.length) {
+          <div class="recent stagger">
+            @for (c of d.recent; track c.id) {
+              <a class="claim-row" [routerLink]="claimLink(c)">
+                <div class="claim-main">
+                  <strong>{{ c.title }}</strong>
+                  <span class="subtle">{{ c.receipt_count }} receipts · updated {{ c.updated_at | relativeTime }}</span>
+                  <div class="mini-progress"><i [style.width.%]="c.readiness"></i></div>
+                </div>
+                <div class="claim-side">
+                  <strong>{{ c.total_reimbursable | money: c.currency }}</strong>
+                  <app-status-pill [claimStatus]="c.status" />
+                </div>
+              </a>
+            }
+          </div>
+        } @else {
+          <div class="empty">
+            <span>🧾</span>
+            <p>No claims yet - start one and drop your receipts.</p>
+            <a routerLink="/agent" class="btn btn-soft btn-sm">Start a claim</a>
+          </div>
+        }
+      </div>
+    </section>
+  } @else {
+    <section class="kpis">
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="kpi card"><div class="skeleton" style="height: 74px"></div></div>
+      }
+    </section>
+  }
+</div>

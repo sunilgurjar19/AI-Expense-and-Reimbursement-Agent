@@ -1,0 +1,47 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 514 >>
+stream
+BT
+/F1 12 Tf
+14 TL
+60 780 Td
+/F1 16 Tf (JioFiber) Tj T*
+/F1 11 Tf (Broadband Bill / Tax Invoice) Tj T*
+/F1 11 Tf (Invoice No: JF-2026-771203) Tj T*
+/F1 11 Tf (Date: 03/10/2026) Tj T*
+/F1 11 Tf (Plan: 300 Mbps Unlimited   Billing period: Sep 2026) Tj T*
+/F1 11 Tf (Plan charges           999.00) Tj T*
+/F1 11 Tf (CGST 9%                   89.91) Tj T*
+/F1 11 Tf (SGST 9%                   89.91) Tj T*
+/F1 11 Tf (Total Amount Rs. 1,178.82) Tj T*
+/F1 11 Tf (Payment Mode: UPI) Tj T*
+/F1 11 Tf (City: Mumbai) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000806 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+876
+%%EOF

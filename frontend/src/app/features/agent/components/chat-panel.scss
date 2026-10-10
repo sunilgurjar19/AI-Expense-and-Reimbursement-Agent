@@ -1,0 +1,254 @@
+:host {
+  display: block;
+  min-height: 0;
+}
+
+.chat {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--gradient-soft);
+
+  strong {
+    display: block;
+    font-size: 15px;
+  }
+
+  .status {
+    font-size: 12px;
+    color: var(--text-2);
+  }
+}
+
+.agent-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 0 8px 18px -8px rgb(124 58 237 / 80%);
+
+  span {
+    animation: spin 8s linear infinite;
+  }
+
+  .presence {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #22c55e;
+    border: 2px solid #fff;
+  }
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.msg {
+  display: flex;
+  gap: 8px;
+  max-width: 92%;
+
+  &.user {
+    align-self: flex-end;
+
+    .bubble {
+      background: var(--gradient);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+
+      time {
+        color: rgb(255 255 255 / 70%);
+      }
+    }
+  }
+
+  &.agent .bubble {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+}
+
+.mini-avatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  border-radius: 8px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 12px;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+
+  time {
+    display: block;
+    margin-top: 4px;
+    font-size: 10.5px;
+    color: var(--text-3);
+  }
+}
+
+.typing {
+  display: flex;
+  gap: 5px;
+  padding: 14px 16px;
+
+  i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--brand-400);
+    animation: blink 1.2s infinite;
+
+    &:nth-child(2) { animation-delay: 0.15s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+  }
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.q-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+
+  .q-count {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--warning-bg);
+    color: var(--warning);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+.composer {
+  border-top: 1px solid var(--border);
+  padding: 10px 12px 12px;
+  background: var(--surface);
+}
+
+.prompts {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.prompt {
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--brand-200);
+  border-radius: 999px;
+  background: var(--brand-50);
+  color: var(--brand-700);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s var(--ease);
+
+  &:hover:not(:disabled) {
+    background: var(--brand-100);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .input {
+    flex: 1;
+    border-radius: 12px;
+  }
+}
+
+.attach {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--surface-2);
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.send {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s var(--spring), opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.08) rotate(-8deg);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "apiBaseUrl": "http://localhost:8100/api",
+  "appName": "Expense & Reimbursement Agent",
+  "toastDurationMs": 5000,
+  "reconnectDelayMs": 4000,
+  "quickPrompts": ["What's my total?", "Is this ready to submit?", "Summarise my claim"]
+}

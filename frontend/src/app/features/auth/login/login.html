@@ -1,0 +1,100 @@
+<div class="login">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <section class="hero">
+    <div class="hero-brand">
+      <div class="logo">₹</div>
+      <span>ExpenseAgent</span>
+    </div>
+
+    <h1>From a pile of receipts to <span class="highlight">“ready to submit”</span> in minutes.</h1>
+    <p class="lead">Your AI reimbursement assistant reads every bill, fills in the details, checks policy and prepares the claim - you just confirm.</p>
+
+    <ol class="flow">
+      @for (step of flow; track step.title; let i = $index) {
+        <li [style.animation-delay.ms]="300 + i * 140">
+          <span class="flow-icon">{{ step.icon }}</span>
+          <div>
+            <strong>{{ step.title }}</strong>
+            <span>{{ step.text }}</span>
+          </div>
+        </li>
+      }
+    </ol>
+
+    <div class="floating">
+      <div class="paper p1">
+        <span>🧾 Uber · ₹827</span><i class="tick">✓</i>
+      </div>
+      <div class="paper p2">
+        <span>🏨 Taj · ₹17,472</span><i class="tick warn">!</i>
+      </div>
+      <div class="paper p3">
+        <span>✈️ IndiGo · ₹6,331</span><i class="tick">✓</i>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <form class="card-glass" [class.shake]="error()" (ngSubmit)="submit()">
+      <div class="form-head">
+        <h2>Welcome back</h2>
+        <p>Sign in to continue to your workspace</p>
+      </div>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input id="username" class="input" name="username" [ngModel]="username()" (ngModelChange)="username.set($event)" autocomplete="username"
+                 placeholder="e.g. employee" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input id="password" class="input" name="password" [ngModel]="password()" (ngModelChange)="password.set($event)" autocomplete="current-password"
+                 [type]="showPassword() ? 'text' : 'password'" placeholder="••••••••" required />
+          <button type="button" class="reveal" (click)="showPassword.set(!showPassword())"
+                  [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+            {{ showPassword() ? '🙈' : '👁️' }}
+          </button>
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="error" animate.enter="enter-fade-up">⛔ {{ error() }}</div>
+      }
+
+      <button class="btn btn-primary btn-lg submit" type="submit" [disabled]="loading() || !username() || !password()">
+        @if (loading()) {
+          <span class="spinner"></span> Signing in…
+        } @else {
+          Sign in <span class="arrow">→</span>
+        }
+      </button>
+
+      @if (demoUsers().length) {
+        <div class="demo">
+          <div class="divider"><span>Demo accounts</span></div>
+          <div class="demo-list">
+            @for (user of demoUsers(); track user.username) {
+              <button type="button" class="demo-user" [class.selected]="username() === user.username" (click)="useDemo(user)">
+                <span class="demo-avatar" [class.manager]="user.role === 'manager'">{{ user.name[0] }}</span>
+                <span class="demo-text">
+                  <strong>{{ user.name }}</strong>
+                  <small>{{ user.username }} / {{ user.password }}</small>
+                </span>
+                <span class="role">{{ user.role }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </form>
+  </section>
+</div>

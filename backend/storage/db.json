@@ -1,0 +1,1392 @@
+{
+  "claims": {
+    "clm-3e4ffbcb0c": {
+      "id": "clm-3e4ffbcb0c",
+      "user_id": "u-1001",
+      "title": "Expenses \u00b7 04 Oct 2026",
+      "title_is_auto": true,
+      "purpose": "you have read the receipt and understand this expenses fall in which category",
+      "status": "paid",
+      "currency": "INR",
+      "reference_no": "EXP-2026-00001",
+      "created_at": "2026-10-07T14:20:19.354072Z",
+      "updated_at": "2026-10-08T05:35:09.522373Z",
+      "submitted_at": "2026-10-08T05:26:48.954398Z",
+      "receipts": [
+        {
+          "id": "rcpt-7333397052",
+          "claim_id": "clm-3e4ffbcb0c",
+          "file_name": "Attachments_2026_10_04T20_11_33.pdf",
+          "stored_name": "ba1cbe708c8d44a7a55e9b58d9f302cf.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 185344,
+          "sha256": "c9be4118e345acd4bb4c80f4c6363c5c2cf52d9d1627d41af7e26eac90e21b41",
+          "uploaded_at": "2026-10-08T05:21:57.388901Z",
+          "stage": "completed",
+          "progress": 100,
+          "status": "complete",
+          "error": null,
+          "data": {
+            "vendor": "SAI GANESH AUTOMOBILES",
+            "date": "2026-10-04",
+            "total_amount": 9240.0,
+            "currency": "INR",
+            "tax_amount": null,
+            "category": "other",
+            "payment_method": "UPI",
+            "invoice_number": "3385",
+            "location": "KHARGHAR",
+            "description": "Paid Service at our Workshop",
+            "business_purpose": null,
+            "attendees": null,
+            "line_items": [
+              {
+                "description": "ENGINE OIL",
+                "amount": 4700.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "GEAR OIL",
+                "amount": 90.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "THROTTLE BODY",
+                "amount": 4900.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "BATTERY",
+                "amount": 1600.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "FRT DISC PAD",
+                "amount": 880.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "PAID SERVICE",
+                "amount": 450.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "CONSUMABLES",
+                "amount": 100.0,
+                "quantity": 1.0
+              },
+              {
+                "description": "REST CODING",
+                "amount": 750.0,
+                "quantity": 1.0
+              }
+            ]
+          },
+          "confidence": {
+            "vendor": 0.98,
+            "date": 0.99,
+            "total_amount": 0.99,
+            "currency": 1.0,
+            "category": 0.95,
+            "payment_method": 0.99,
+            "invoice_number": 0.99,
+            "location": 0.99,
+            "description": 0.99
+          },
+          "confirmed_fields": [],
+          "is_receipt": true,
+          "extraction_source": "ollama",
+          "extraction_notes": "ONLY CONSUMABLES CHARGES REQUIRE .01% DISCOUNT, PARTS 5% DISCOUNT, OTHERS LABOR 20% DISCOUNT PICKUP DROP 15% DISCOUNT",
+          "amount_in_base": 9240.0,
+          "reimbursable_amount": 5000.0,
+          "flags": [
+            {
+              "code": "WEEKEND",
+              "severity": "info",
+              "message": "Expense was incurred on a weekend."
+            },
+            {
+              "code": "OVER_LIMIT",
+              "severity": "warning",
+              "message": "Exceeds the Other limit of INR 5,000; reimbursement is capped."
+            }
+          ],
+          "missing_fields": [],
+          "duplicate_of": null,
+          "duplicate_note": null,
+          "duplicate_acknowledged": false,
+          "justification": "approve only limit amount",
+          "excluded": false
+        }
+      ],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-2e96252921",
+          "role": "agent",
+          "text": "Hi Aarav! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-07T14:20:19.354221Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-cbe753dc86",
+          "role": "agent",
+          "text": "Got 1 file! \ud83d\udce5 Reading it now - you can watch each step on the right.",
+          "created_at": "2026-10-08T05:21:57.395116Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-3330382f58",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83e\uddfe SAI GANESH AUTOMOBILES - INR 9,240.00\n\nClaim total so far: **INR 9,240.00** (reimbursable INR 5,000.00).\n\nI just need 2 quick answers from you \ud83d\udc47",
+          "created_at": "2026-10-08T05:22:31.428143Z",
+          "meta": {
+            "kind": "summary"
+          }
+        },
+        {
+          "id": "msg-d335268e60",
+          "role": "user",
+          "text": "approve only limit amount",
+          "created_at": "2026-10-08T05:24:58.535383Z",
+          "meta": {
+            "question_id": "q-70fe82995d"
+          }
+        },
+        {
+          "id": "msg-a8fecec22d",
+          "role": "agent",
+          "text": "Got it \ud83d\udc4d Just one more.",
+          "created_at": "2026-10-08T05:24:58.540491Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-e9ec90616d",
+          "role": "user",
+          "text": "you have read the receipt and understand this expenses fall in which category",
+          "created_at": "2026-10-08T05:25:55.021237Z",
+          "meta": {
+            "question_id": "q-6ceb7dcf7d"
+          }
+        },
+        {
+          "id": "msg-e74eb44c79",
+          "role": "agent",
+          "text": "Perfect, that's everything! \ud83c\udf89 Your claim for **INR 5,000.00** is ready to submit.",
+          "created_at": "2026-10-08T05:25:55.023301Z",
+          "meta": {}
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Aarav Sharma",
+          "note": null,
+          "at": "2026-10-07T14:20:19.354152Z"
+        },
+        {
+          "status": "submitted",
+          "label": "Submitted to finance system",
+          "actor": "Aarav Sharma",
+          "note": "Reference EXP-2026-00001",
+          "at": "2026-10-08T05:26:48.954753Z"
+        },
+        {
+          "status": "manager_review",
+          "label": "Awaiting manager approval",
+          "actor": "Meera Iyer",
+          "note": null,
+          "at": "2026-10-08T05:26:48.967375Z"
+        },
+        {
+          "status": "approved",
+          "label": "Approved",
+          "actor": "Meera Iyer",
+          "note": "",
+          "at": "2026-10-08T05:34:44.514329Z"
+        },
+        {
+          "status": "finance_processing",
+          "label": "Queued for payout",
+          "actor": "Finance (mock)",
+          "note": null,
+          "at": "2026-10-08T05:34:44.514338Z"
+        },
+        {
+          "status": "paid",
+          "label": "Reimbursed to salary account",
+          "actor": "Finance (mock)",
+          "note": "INR 5,000.00 transferred",
+          "at": "2026-10-08T05:35:09.522365Z"
+        }
+      ],
+      "total_claimed": 9240.0,
+      "total_reimbursable": 5000.0,
+      "readiness": 100,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": true
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": true
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": true
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": true
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": true
+        },
+        {
+          "key": "purpose",
+          "label": "Business purpose added",
+          "done": true
+        }
+      ],
+      "groups": [
+        {
+          "category": "other",
+          "label": "Other",
+          "icon": "\ud83e\uddfe",
+          "count": 1,
+          "total": 9240.0
+        }
+      ],
+      "period_start": "2026-10-04",
+      "period_end": "2026-10-04"
+    },
+    "clm-f20bb7f249": {
+      "id": "clm-f20bb7f249",
+      "user_id": "u-2001",
+      "title": "New expense claim",
+      "title_is_auto": true,
+      "purpose": null,
+      "status": "draft",
+      "currency": "INR",
+      "reference_no": null,
+      "created_at": "2026-10-08T05:34:58.749708Z",
+      "updated_at": "2026-10-08T05:34:58.749884Z",
+      "submitted_at": null,
+      "receipts": [],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-0b9e092fa1",
+          "role": "agent",
+          "text": "Hi Meera! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-08T05:34:58.749766Z",
+          "meta": {}
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Meera Iyer",
+          "note": null,
+          "at": "2026-10-08T05:34:58.749736Z"
+        }
+      ],
+      "total_claimed": 0.0,
+      "total_reimbursable": 0.0,
+      "readiness": 0,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": false
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": false
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": false
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": false
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": false
+        },
+        {
+          "key": "purpose",
+          "label": "Business purpose added",
+          "done": false
+        }
+      ],
+      "groups": [],
+      "period_start": null,
+      "period_end": null
+    },
+    "clm-058c555623": {
+      "id": "clm-058c555623",
+      "user_id": "u-2001",
+      "title": "New expense claim",
+      "title_is_auto": true,
+      "purpose": null,
+      "status": "draft",
+      "currency": "INR",
+      "reference_no": null,
+      "created_at": "2026-10-08T05:35:23.934222Z",
+      "updated_at": "2026-10-08T05:35:23.934459Z",
+      "submitted_at": null,
+      "receipts": [],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-b7e7c70d5e",
+          "role": "agent",
+          "text": "Hi Meera! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-08T05:35:23.934388Z",
+          "meta": {}
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Meera Iyer",
+          "note": null,
+          "at": "2026-10-08T05:35:23.934233Z"
+        }
+      ],
+      "total_claimed": 0.0,
+      "total_reimbursable": 0.0,
+      "readiness": 0,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": false
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": false
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": false
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": false
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": false
+        },
+        {
+          "key": "purpose",
+          "label": "Business purpose added",
+          "done": false
+        }
+      ],
+      "groups": [],
+      "period_start": null,
+      "period_end": null
+    },
+    "clm-ddc22afe2f": {
+      "id": "clm-ddc22afe2f",
+      "user_id": "u-2001",
+      "title": "New expense claim",
+      "title_is_auto": true,
+      "purpose": null,
+      "status": "draft",
+      "currency": "INR",
+      "reference_no": null,
+      "created_at": "2026-10-08T05:35:23.935669Z",
+      "updated_at": "2026-10-08T05:35:23.935884Z",
+      "submitted_at": null,
+      "receipts": [],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-a005507252",
+          "role": "agent",
+          "text": "Hi Meera! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-08T05:35:23.935839Z",
+          "meta": {}
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Meera Iyer",
+          "note": null,
+          "at": "2026-10-08T05:35:23.935680Z"
+        }
+      ],
+      "total_claimed": 0.0,
+      "total_reimbursable": 0.0,
+      "readiness": 0,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": false
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": false
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": false
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": false
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": false
+        },
+        {
+          "key": "purpose",
+          "label": "Business purpose added",
+          "done": false
+        }
+      ],
+      "groups": [],
+      "period_start": null,
+      "period_end": null
+    },
+    "clm-297ad5e1e3": {
+      "id": "clm-297ad5e1e3",
+      "user_id": "u-1001",
+      "title": "Expenses \u00b7 20 Sep 2026",
+      "title_is_auto": true,
+      "purpose": "home to office",
+      "purpose_source": "user",
+      "purpose_inferring": false,
+      "status": "ready",
+      "currency": "INR",
+      "reference_no": null,
+      "created_at": "2026-10-08T05:53:50.885943Z",
+      "updated_at": "2026-10-08T10:39:15.656611Z",
+      "submitted_at": null,
+      "receipts": [
+        {
+          "id": "rcpt-bc0063ed6d",
+          "claim_id": "clm-297ad5e1e3",
+          "file_name": "Attachments_2026_09_20T19_25_26.pdf",
+          "stored_name": "9d3e2c88cc8c48d2ab0b682f15d1e8c4.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 672768,
+          "sha256": "39bd96d95bdcaca1db02b6b3c06ff9c029bb79b0bfce41b2d251512607289809",
+          "uploaded_at": "2026-10-08T05:53:50.910133Z",
+          "stage": "completed",
+          "progress": 100,
+          "status": "complete",
+          "error": null,
+          "data": {
+            "vendor": "\u092e\u0948\u0928\u093f\u092a \u0938\u0930\u094d\u0935\u093f\u0938 \u0938\u0947\u0902\u091f\u0930",
+            "vendor_local": null,
+            "language": null,
+            "date": "2026-09-20",
+            "total_amount": 4130.0,
+            "currency": "INR",
+            "tax_amount": null,
+            "category": "other",
+            "payment_method": null,
+            "invoice_number": "0 14821",
+            "location": "\u0935\u093f\u0915\u094d\u0930\u0947\u0924\u093e : \u0907\u0902\u0921\u093f\u092f\u0928 \u0911\u092f\u0932 \u0915\u0949\u0930\u092a\u094b\u0930\u0947\u0936\u0928 \u0932\u093f.",
+            "description": "\u092a\u0947\u091f\u094d\u0930\u094b\u0932, \u0921\u0940\u095b\u0932, \u0911\u092f\u0932 \u0914\u0930 \u092c\u0940\u0906\u0908\u090f\u0938",
+            "business_purpose": null,
+            "attendees": null,
+            "line_items": [
+              {
+                "description": "\u092a\u0947\u091f\u094d\u0930\u094b\u0932",
+                "amount": 42.19,
+                "quantity": null,
+                "unit_price": null
+              },
+              {
+                "description": "\u0921\u0940\u095b\u0932",
+                "amount": 97.91,
+                "quantity": null,
+                "unit_price": null
+              },
+              {
+                "description": "\u0911\u092f\u0932 \u0914\u0930 \u092c\u0940\u0906\u0908\u090f\u0938",
+                "amount": 4130.0,
+                "quantity": null,
+                "unit_price": null
+              }
+            ]
+          },
+          "confidence": {
+            "vendor": 0.95,
+            "date": 0.98,
+            "total_amount": 0.99,
+            "currency": 1.0,
+            "category": 0.85,
+            "invoice_number": 0.97,
+            "location": 0.96,
+            "description": 0.99
+          },
+          "confirmed_fields": [],
+          "is_receipt": true,
+          "extraction_source": "ollama",
+          "extraction_notes": "Cash Memo",
+          "amount_in_base": 4130.0,
+          "reimbursable_amount": 4130.0,
+          "flags": [
+            {
+              "code": "WEEKEND",
+              "severity": "info",
+              "message": "Expense was incurred on a weekend."
+            }
+          ],
+          "missing_fields": [],
+          "duplicate_of": null,
+          "duplicate_note": null,
+          "duplicate_acknowledged": false,
+          "justification": null,
+          "excluded": false,
+          "purpose_inherited": false
+        }
+      ],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-6084be9a62",
+          "role": "agent",
+          "text": "Hi Aarav! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-08T05:53:50.887106Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-a0fbe4277d",
+          "role": "agent",
+          "text": "Got 1 file! \ud83d\udce5 Reading it now - you can watch each step on the right.",
+          "created_at": "2026-10-08T05:53:50.911553Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-57a4ade94d",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83e\uddfe \u092e\u0948\u0928\u093f\u092a \u0938\u0930\u094d\u0935\u093f\u0938 \u0938\u0947\u0902\u091f\u0930 - INR 4,130.00\n\nClaim total so far: **INR 4,130.00** (reimbursable INR 4,130.00).\n\nI just need 1 quick answer from you \ud83d\udc47",
+          "created_at": "2026-10-08T05:54:18.315673Z",
+          "meta": {
+            "kind": "summary"
+          }
+        },
+        {
+          "id": "msg-09a61d7b72",
+          "role": "user",
+          "text": "home to office",
+          "created_at": "2026-10-08T10:38:26.724398Z",
+          "meta": {
+            "question_id": "q-df2f83f9a1"
+          }
+        },
+        {
+          "id": "msg-27260400de",
+          "role": "agent",
+          "text": "Perfect, that's everything! \ud83c\udf89 Your claim for **INR 4,130.00** is ready to submit.",
+          "created_at": "2026-10-08T10:38:26.725014Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-4ed9a7041e",
+          "role": "user",
+          "text": "Is this ready to submit?",
+          "created_at": "2026-10-08T10:38:56.282191Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-6f78042647",
+          "role": "agent",
+          "text": "Yes, Aarav! \ud83c\udf89 Your claim for INR 4,130.00 is ready to submit.",
+          "created_at": "2026-10-08T10:39:08.523185Z",
+          "meta": {
+            "provider": "ollama",
+            "applied": 0
+          }
+        },
+        {
+          "id": "msg-6656b617ac",
+          "role": "user",
+          "text": "Summarise my claim",
+          "created_at": "2026-10-08T10:39:12.610880Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-f7bea7bdf4",
+          "role": "agent",
+          "text": "Okay, Aarav! Your claim for INR 4,130.00 is for a 'home to office' trip, with a single receipt from Manip Service Center for INR 4,130.00.",
+          "created_at": "2026-10-08T10:39:15.656574Z",
+          "meta": {
+            "provider": "ollama",
+            "applied": 0
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Aarav Sharma",
+          "note": null,
+          "at": "2026-10-08T05:53:50.885982Z"
+        }
+      ],
+      "total_claimed": 4130.0,
+      "total_reimbursable": 4130.0,
+      "readiness": 100,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": true
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": true
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": true
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": true
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": true
+        },
+        {
+          "key": "purpose",
+          "label": "Purpose / remarks added",
+          "done": true
+        }
+      ],
+      "groups": [
+        {
+          "category": "other",
+          "label": "Other Reimbursement",
+          "icon": "\ud83e\uddfe",
+          "count": 1,
+          "total": 4130.0
+        }
+      ],
+      "period_start": "2026-09-20",
+      "period_end": "2026-09-20"
+    },
+    "clm-6dc0ac5e9e": {
+      "id": "clm-6dc0ac5e9e",
+      "user_id": "u-1002",
+      "title": "Expenses \u00b7 20 Sep 2026",
+      "title_is_auto": true,
+      "purpose": "Business expenses (20 Sep 2026): fuel expenses - car in Navi Mumbai.",
+      "purpose_source": "agent",
+      "purpose_inferring": false,
+      "status": "submitted",
+      "currency": "INR",
+      "reference_no": "EXP-2026-00002",
+      "created_at": "2026-10-09T05:08:04.375262Z",
+      "updated_at": "2026-10-10T07:18:13.075075Z",
+      "submitted_at": "2026-10-10T07:18:13.058608Z",
+      "receipts": [
+        {
+          "id": "rcpt-cc6c78b6a5",
+          "claim_id": "clm-6dc0ac5e9e",
+          "file_name": "Attachments_2026_09_20T19_25_26.pdf",
+          "stored_name": "e9f2f7d8980f4d48a53815dd9edfa451.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 672768,
+          "sha256": "39bd96d95bdcaca1db02b6b3c06ff9c029bb79b0bfce41b2d251512607289809",
+          "uploaded_at": "2026-10-09T05:08:04.398540Z",
+          "stage": "completed",
+          "progress": 100,
+          "status": "complete",
+          "error": null,
+          "data": {
+            "vendor": "Manish Service Center",
+            "vendor_local": "\u092e\u0928\u093f\u0937 \u0938\u0930\u094d\u0935\u093f\u0938 \u0938\u0947\u0902\u091f\u0930",
+            "language": "Hindi",
+            "date": "2026-09-20",
+            "total_amount": 4130.0,
+            "currency": "INR",
+            "tax_amount": null,
+            "category": "fuel_car",
+            "payment_method": "Cash",
+            "invoice_number": "014821",
+            "location": "Navi Mumbai",
+            "description": "Fuel purchase from Manish Service Center, Indian Oil Corporation Ltd.",
+            "business_purpose": null,
+            "attendees": null,
+            "line_items": [
+              {
+                "description": "Diesel",
+                "amount": 4130.0,
+                "quantity": 42.19,
+                "unit_price": 97.91
+              }
+            ]
+          },
+          "confidence": {
+            "vendor": 0.8,
+            "date": 0.8,
+            "total_amount": 0.8,
+            "currency": 0.8,
+            "category": 0.8,
+            "payment_method": 0.8,
+            "invoice_number": 0.8,
+            "location": 0.8,
+            "description": 0.8
+          },
+          "confirmed_fields": [
+            "currency"
+          ],
+          "is_receipt": true,
+          "extraction_source": "ollama",
+          "extraction_notes": "Handwritten digits, multiple receipts on one page. Double-checked by a second reading.",
+          "read_warning": null,
+          "amount_in_base": 4130.0,
+          "reimbursable_amount": 4130.0,
+          "flags": [
+            {
+              "code": "WEEKEND",
+              "severity": "info",
+              "message": "Expense was incurred on a weekend."
+            }
+          ],
+          "missing_fields": [],
+          "duplicate_of": null,
+          "duplicate_note": null,
+          "duplicate_acknowledged": false,
+          "justification": null,
+          "excluded": false,
+          "purpose_inherited": false
+        }
+      ],
+      "questions": [],
+      "messages": [
+        {
+          "id": "msg-eedc64de91",
+          "role": "agent",
+          "text": "Hi Priya! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-09T05:08:04.375362Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-18df52c252",
+          "role": "agent",
+          "text": "Got 1 file! \ud83d\udce5 Reading it now - you can watch each step on the right.",
+          "created_at": "2026-10-09T05:08:04.400123Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-da6a371a93",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83e\uddfe Attachments_2026_09_20T19_25_26.pdf - amount unknown\n\nClaim total so far: **INR 0.00** (reimbursable INR 0.00).\n\n\ud83d\udcdd I've added the remarks: \u201cBusiness expenses: other reimbursement.\u201d - edit them in **Remarks** if that's not right.\n\nI just need 5 quick answers from you \ud83d\udc47",
+          "created_at": "2026-10-09T05:08:07.190575Z",
+          "meta": {
+            "kind": "summary"
+          }
+        },
+        {
+          "id": "msg-8799a276ba",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83e\uddfe Attachments_2026_09_20T19_25_26.pdf - amount unknown\n\nClaim total so far: **INR 0.00** (reimbursable INR 0.00).\n\n\ud83d\udcdd I've added the remarks: \u201cBusiness expenses: other reimbursement.\u201d - edit them in **Remarks** if that's not right.\n\nI just need 5 quick answers from you \ud83d\udc47",
+          "created_at": "2026-10-09T05:08:50.109852Z",
+          "meta": {
+            "kind": "summary"
+          }
+        },
+        {
+          "id": "msg-bac9447e36",
+          "role": "user",
+          "text": "INR",
+          "created_at": "2026-10-09T05:08:56.569078Z",
+          "meta": {
+            "question_id": "q-a1a2f7919c"
+          }
+        },
+        {
+          "id": "msg-326f1af700",
+          "role": "agent",
+          "text": "Got it \ud83d\udc4d 4 more to go.",
+          "created_at": "2026-10-09T05:08:56.569237Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-b1dfe886c1",
+          "role": "agent",
+          "text": "Claim total so far: **INR 0.00** (reimbursable INR 0.00).\n\n\ud83d\udcdd I've added the remarks: \u201cBusiness expenses (20 Sep 2026): fuel expenses - car in Navi Mumbai.\u201d - edit them in **Remarks** if that's not right.",
+          "created_at": "2026-10-09T05:13:52.183628Z",
+          "meta": {
+            "kind": "summary"
+          }
+        },
+        {
+          "id": "msg-7d7bac80b1",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83d\ude97 Manish Service Center - INR 4,130.00\n\nClaim total so far: **INR 4,130.00** (reimbursable INR 4,130.00).\n\n\ud83d\udcdd I've added the remarks: \u201cBusiness expenses (20 Sep 2026): fuel expenses - car in Navi Mumbai.\u201d - edit them in **Remarks** if that's not right.\n\nEverything checks out - your claim is **ready to submit** \u2705",
+          "created_at": "2026-10-09T05:14:38.881388Z",
+          "meta": {
+            "kind": "summary"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Priya Nair",
+          "note": null,
+          "at": "2026-10-09T05:08:04.375336Z"
+        },
+        {
+          "status": "submitted",
+          "label": "Submitted to finance system",
+          "actor": "Priya Nair",
+          "note": "Reference EXP-2026-00002",
+          "at": "2026-10-10T07:18:13.058625Z"
+        },
+        {
+          "status": "manager_review",
+          "label": "Awaiting manager approval",
+          "actor": "Meera Iyer",
+          "note": null,
+          "at": "2026-10-10T07:18:13.072052Z"
+        }
+      ],
+      "total_claimed": 4130.0,
+      "total_reimbursable": 4130.0,
+      "readiness": 100,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": true
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": true
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": true
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": true
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": true
+        },
+        {
+          "key": "purpose",
+          "label": "Purpose / remarks added",
+          "done": true
+        }
+      ],
+      "groups": [
+        {
+          "category": "fuel_car",
+          "label": "Fuel Expenses - Car",
+          "icon": "\ud83d\ude97",
+          "count": 1,
+          "total": 4130.0
+        }
+      ],
+      "period_start": "2026-09-20",
+      "period_end": "2026-09-20"
+    },
+    "clm-179350f5fd": {
+      "id": "clm-179350f5fd",
+      "user_id": "u-1002",
+      "title": "Expenses \u00b7 20 Sep 2026",
+      "title_is_auto": true,
+      "purpose": "Business expenses (20 Sep 2026): fuel expenses - car in Navi Mumbai.",
+      "purpose_source": "agent",
+      "purpose_inferring": false,
+      "status": "needs_attention",
+      "currency": "INR",
+      "reference_no": null,
+      "created_at": "2026-10-09T05:23:29.035739Z",
+      "updated_at": "2026-10-09T05:24:28.022702Z",
+      "submitted_at": null,
+      "receipts": [
+        {
+          "id": "rcpt-cf5885de85",
+          "claim_id": "clm-179350f5fd",
+          "file_name": "Attachments_2026_09_20T19_25_26.pdf",
+          "stored_name": "41e31d473dd84670822ed545d94ff40a.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 672768,
+          "sha256": "39bd96d95bdcaca1db02b6b3c06ff9c029bb79b0bfce41b2d251512607289809",
+          "uploaded_at": "2026-10-09T05:23:29.088725Z",
+          "stage": "completed",
+          "progress": 100,
+          "status": "questionable",
+          "error": null,
+          "data": {
+            "vendor": "Manish Service Center",
+            "vendor_local": "\u092e\u0928\u093f\u0937 \u0938\u0930\u094d\u0935\u093f\u0938 \u0938\u0947\u0902\u091f\u0930",
+            "language": "Hindi",
+            "date": "2026-09-20",
+            "total_amount": 4130.0,
+            "currency": "INR",
+            "tax_amount": null,
+            "category": "fuel_car",
+            "payment_method": "Cash",
+            "invoice_number": "014821",
+            "location": "Navi Mumbai",
+            "description": "Fuel purchase from Manish Service Center, Indian Oil Corporation Ltd.",
+            "business_purpose": null,
+            "attendees": null,
+            "line_items": [
+              {
+                "description": "Diesel",
+                "amount": 4130.0,
+                "quantity": 42.19,
+                "unit_price": 97.91
+              }
+            ]
+          },
+          "confidence": {
+            "vendor": 0.8,
+            "date": 0.8,
+            "total_amount": 0.8,
+            "currency": 0.8,
+            "category": 0.8,
+            "payment_method": 0.8,
+            "invoice_number": 0.8,
+            "location": 0.8,
+            "description": 0.8
+          },
+          "confirmed_fields": [],
+          "is_receipt": true,
+          "extraction_source": "ollama",
+          "extraction_notes": "Handwritten digits, multiple receipts on one page. Double-checked by a second reading.",
+          "read_warning": null,
+          "amount_in_base": 4130.0,
+          "reimbursable_amount": 4130.0,
+          "flags": [
+            {
+              "code": "WEEKEND",
+              "severity": "info",
+              "message": "Expense was incurred on a weekend."
+            },
+            {
+              "code": "POSSIBLE_DUPLICATE",
+              "severity": "warning",
+              "message": "Looks like a duplicate of another receipt you've uploaded."
+            }
+          ],
+          "missing_fields": [],
+          "duplicate_of": "rcpt-cc6c78b6a5",
+          "duplicate_note": "in your claim \u201cExpenses \u00b7 20 Sep 2026\u201d",
+          "duplicate_acknowledged": false,
+          "justification": null,
+          "excluded": false,
+          "purpose_inherited": false
+        }
+      ],
+      "questions": [
+        {
+          "id": "q-0df5cd05c7",
+          "key": "rcpt-cf5885de85:duplicate",
+          "receipt_id": "rcpt-cf5885de85",
+          "kind": "duplicate",
+          "prompt": "the **Manish Service Center** receipt looks like a duplicate of one already uploaded in your claim \u201cExpenses \u00b7 20 Sep 2026\u201d.",
+          "type": "choice",
+          "options": [
+            {
+              "value": "exclude",
+              "label": "Remove duplicate"
+            },
+            {
+              "value": "keep",
+              "label": "Keep both - they're different"
+            }
+          ],
+          "default": null,
+          "created_at": "2026-10-09T05:24:24.768591Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg-8ff740616a",
+          "role": "agent",
+          "text": "Hi Priya! \ud83d\udc4b I'm Rika. Drop your bills here - photos, screenshots or PDFs - and I'll read them, sort them into categories, check them against policy and get your claim ready to submit.",
+          "created_at": "2026-10-09T05:23:29.038116Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-73f2101f41",
+          "role": "agent",
+          "text": "Got 1 file! \ud83d\udce5 Reading it now - you can watch each step on the right.",
+          "created_at": "2026-10-09T05:23:29.094414Z",
+          "meta": {}
+        },
+        {
+          "id": "msg-c9704344b7",
+          "role": "agent",
+          "text": "Done reading! Here's what I found:\n\ud83d\ude97 Manish Service Center - INR 4,130.00\n\nClaim total so far: **INR 4,130.00** (reimbursable INR 4,130.00).\n\n\ud83d\udcdd I've added the remarks: \u201cBusiness expenses (20 Sep 2026): fuel expenses - car in Navi Mumbai.\u201d - edit them in **Remarks** if that's not right.\n\nI just need 1 quick answer from you \ud83d\udc47",
+          "created_at": "2026-10-09T05:24:28.022695Z",
+          "meta": {
+            "kind": "summary"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "status": "draft",
+          "label": "Claim created",
+          "actor": "Priya Nair",
+          "note": null,
+          "at": "2026-10-09T05:23:29.036480Z"
+        }
+      ],
+      "total_claimed": 4130.0,
+      "total_reimbursable": 4130.0,
+      "readiness": 83,
+      "checklist": [
+        {
+          "key": "uploaded",
+          "label": "Receipts uploaded",
+          "done": true
+        },
+        {
+          "key": "processed",
+          "label": "All receipts read by the agent",
+          "done": true
+        },
+        {
+          "key": "details",
+          "label": "Required details captured",
+          "done": true
+        },
+        {
+          "key": "policy",
+          "label": "Policy checks passed",
+          "done": true
+        },
+        {
+          "key": "duplicates",
+          "label": "No unresolved duplicates",
+          "done": false
+        },
+        {
+          "key": "purpose",
+          "label": "Purpose / remarks added",
+          "done": true
+        }
+      ],
+      "groups": [
+        {
+          "category": "fuel_car",
+          "label": "Fuel Expenses - Car",
+          "icon": "\ud83d\ude97",
+          "count": 1,
+          "total": 4130.0
+        }
+      ],
+      "period_start": "2026-09-20",
+      "period_end": "2026-09-20"
+    }
+  },
+  "notifications": {
+    "u-1001": [
+      {
+        "id": "ntf-573719934c",
+        "user_id": "u-1001",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cExpenses \u00b7 04 Oct 2026\u201d \u00b7 2 question(s) waiting",
+        "link": "/agent/clm-3e4ffbcb0c",
+        "read": true,
+        "created_at": "2026-10-08T05:22:31.430475Z"
+      },
+      {
+        "id": "ntf-5f4b27904a",
+        "user_id": "u-1001",
+        "level": "success",
+        "title": "Ready to submit \u2728",
+        "message": "\u201cExpenses \u00b7 04 Oct 2026\u201d passed every check. Review and submit when you're ready.",
+        "link": "/agent/clm-3e4ffbcb0c",
+        "read": true,
+        "created_at": "2026-10-08T05:25:55.031880Z"
+      },
+      {
+        "id": "ntf-aa269b5c0c",
+        "user_id": "u-1001",
+        "level": "success",
+        "title": "Claim submitted \ud83d\ude80",
+        "message": "Expenses \u00b7 04 Oct 2026 (INR 5,000.00) was submitted as EXP-2026-00001.",
+        "link": "/claims/clm-3e4ffbcb0c",
+        "read": true,
+        "created_at": "2026-10-08T05:26:48.954907Z"
+      },
+      {
+        "id": "ntf-996634af47",
+        "user_id": "u-1001",
+        "level": "success",
+        "title": "Claim approved \u2705",
+        "message": "EXP-2026-00001 was approved by Meera Iyer. Finance is processing the payout.",
+        "link": "/claims/clm-3e4ffbcb0c",
+        "read": false,
+        "created_at": "2026-10-08T05:34:44.514386Z"
+      },
+      {
+        "id": "ntf-cae203143c",
+        "user_id": "u-1001",
+        "level": "success",
+        "title": "Money on its way \ud83d\udcb8",
+        "message": "INR 5,000.00 for EXP-2026-00001 has been paid out.",
+        "link": "/claims/clm-3e4ffbcb0c",
+        "read": false,
+        "created_at": "2026-10-08T05:35:09.525916Z"
+      },
+      {
+        "id": "ntf-e7d10d4515",
+        "user_id": "u-1001",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cExpenses \u00b7 20 Sep 2026\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-297ad5e1e3",
+        "read": true,
+        "created_at": "2026-10-08T05:54:18.318368Z"
+      },
+      {
+        "id": "ntf-4b0308f587",
+        "user_id": "u-1001",
+        "level": "success",
+        "title": "Ready to submit \u2728",
+        "message": "\u201cExpenses \u00b7 20 Sep 2026\u201d passed every check. Review and submit when you're ready.",
+        "link": "/agent/clm-297ad5e1e3",
+        "read": false,
+        "created_at": "2026-10-08T10:38:26.728431Z"
+      },
+      {
+        "id": "ntf-f3a92c30a6",
+        "user_id": "u-1001",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cNew expense claim\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-1972fdb325",
+        "read": false,
+        "created_at": "2026-10-08T10:40:59.893157Z"
+      },
+      {
+        "id": "ntf-f3ef6e8e73",
+        "user_id": "u-1001",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cNew expense claim\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-ccaf2f2557",
+        "read": false,
+        "created_at": "2026-10-09T01:01:24.647380Z"
+      }
+    ],
+    "u-2001": [
+      {
+        "id": "ntf-4529879ab9",
+        "user_id": "u-2001",
+        "level": "info",
+        "title": "Approval needed",
+        "message": "Aarav Sharma submitted Expenses \u00b7 04 Oct 2026 for INR 5,000.00.",
+        "link": "/approvals/clm-3e4ffbcb0c",
+        "read": false,
+        "created_at": "2026-10-08T05:26:48.967423Z"
+      },
+      {
+        "id": "ntf-6e8bae60bd",
+        "user_id": "u-2001",
+        "level": "info",
+        "title": "Approval needed",
+        "message": "Priya Nair submitted Expenses \u00b7 20 Sep 2026 for INR 4,130.00.",
+        "link": "/approvals/clm-6dc0ac5e9e",
+        "read": false,
+        "created_at": "2026-10-10T07:18:13.072096Z"
+      }
+    ],
+    "u-1002": [
+      {
+        "id": "ntf-2259da5e65",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "4 of 4 receipt(s) read for \u201cBengaluru trip \u00b7 28\u201330 Sep 2026\u201d \u00b7 5 question(s) waiting",
+        "link": "/agent/clm-0b35787b77",
+        "read": true,
+        "created_at": "2026-10-08T06:00:38.759541Z"
+      },
+      {
+        "id": "ntf-da641d061e",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cBengaluru trip \u00b7 28 Sep \u2013 01 Oct 2026\u201d \u00b7 6 question(s) waiting",
+        "link": "/agent/clm-0b35787b77",
+        "read": true,
+        "created_at": "2026-10-08T06:00:55.583415Z"
+      },
+      {
+        "id": "ntf-96c664f96e",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "4 of 4 receipt(s) read for \u201cBengaluru trip \u00b7 28\u201330 Sep 2026\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-0fb8b94be8",
+        "read": true,
+        "created_at": "2026-10-08T06:03:37.893692Z"
+      },
+      {
+        "id": "ntf-fdf743017f",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cBengaluru trip \u00b7 28 Sep \u2013 01 Oct 2026\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-0fb8b94be8",
+        "read": true,
+        "created_at": "2026-10-08T06:03:50.684807Z"
+      },
+      {
+        "id": "ntf-dffcddc268",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "7 of 7 receipt(s) read for \u201cMumbai trip \u00b7 20 Sep \u2013 05 Oct 2026\u201d \u00b7 3 question(s) waiting",
+        "link": "/agent/clm-2a23a26f39",
+        "read": true,
+        "created_at": "2026-10-08T06:43:11.929511Z"
+      },
+      {
+        "id": "ntf-a27fc04184",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "7 of 7 receipt(s) read for \u201cMumbai trip \u00b7 20 Sep \u2013 05 Oct 2026\u201d \u00b7 3 question(s) waiting",
+        "link": "/agent/clm-ee2d4a9af0",
+        "read": true,
+        "created_at": "2026-10-08T06:47:42.226857Z"
+      },
+      {
+        "id": "ntf-c68ce06a55",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "7 of 7 receipt(s) read for \u201cMumbai trip \u00b7 20 Sep \u2013 05 Oct 2026\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-c42cfe3a7e",
+        "read": true,
+        "created_at": "2026-10-08T06:54:48.321442Z"
+      },
+      {
+        "id": "ntf-b4d1c7f8ca",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cNew expense claim\u201d \u00b7 5 question(s) waiting",
+        "link": "/agent/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-09T05:08:07.192990Z"
+      },
+      {
+        "id": "ntf-1712589399",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cNew expense claim\u201d \u00b7 5 question(s) waiting",
+        "link": "/agent/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-09T05:08:50.113350Z"
+      },
+      {
+        "id": "ntf-b5541becc0",
+        "user_id": "u-1002",
+        "level": "success",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cNew expense claim\u201d",
+        "link": "/agent/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-09T05:13:52.190906Z"
+      },
+      {
+        "id": "ntf-4881a5add8",
+        "user_id": "u-1002",
+        "level": "success",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cExpenses \u00b7 20 Sep 2026\u201d",
+        "link": "/agent/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-09T05:14:38.895623Z"
+      },
+      {
+        "id": "ntf-f47963ba17",
+        "user_id": "u-1002",
+        "level": "success",
+        "title": "Ready to submit \u2728",
+        "message": "\u201cExpenses \u00b7 20 Sep 2026\u201d passed every check. Review and submit when you're ready.",
+        "link": "/agent/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-09T05:14:38.902821Z"
+      },
+      {
+        "id": "ntf-ae9c98b233",
+        "user_id": "u-1002",
+        "level": "warning",
+        "title": "Receipts processed",
+        "message": "1 of 1 receipt(s) read for \u201cExpenses \u00b7 20 Sep 2026\u201d \u00b7 1 question(s) waiting",
+        "link": "/agent/clm-179350f5fd",
+        "read": true,
+        "created_at": "2026-10-09T05:24:28.027954Z"
+      },
+      {
+        "id": "ntf-8a5b9dc5da",
+        "user_id": "u-1002",
+        "level": "success",
+        "title": "Claim submitted \ud83d\ude80",
+        "message": "Expenses \u00b7 20 Sep 2026 (INR 4,130.00) was submitted as EXP-2026-00002.",
+        "link": "/claims/clm-6dc0ac5e9e",
+        "read": true,
+        "created_at": "2026-10-10T07:18:13.060685Z"
+      }
+    ]
+  }
+}

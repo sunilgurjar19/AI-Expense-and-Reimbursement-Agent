@@ -1,0 +1,62 @@
+<div class="shell" [class.collapsed]="collapsed()">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">₹</div>
+      <div class="brand-text">
+        <strong>ExpenseAgent</strong>
+        <span>{{ policy.config()?.company ?? 'Reimbursements' }}</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary new-claim" (click)="newClaim()">
+      <span class="plus">＋</span><span class="label">Drop receipts</span>
+    </button>
+
+    <nav>
+      @for (item of nav(); track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/agent' }"
+           class="nav-item" [attr.title]="item.label">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span class="label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="engine" [attr.title]="'Active LLM provider'">
+        <span class="engine-dot" [class.on]="realtime.connected()"></span>
+        <span class="label">
+          {{ realtime.connected() ? 'Live' : 'Connecting…' }} · {{ policy.config()?.llm_provider ?? '…' }}
+        </span>
+      </div>
+      <button class="collapse" (click)="collapsed.set(!collapsed())" [attr.aria-label]="collapsed() ? 'Expand' : 'Collapse'">
+        {{ collapsed() ? '»' : '«' }}
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="greeting">
+        <span class="wave">👋</span>
+        <span>Hello, <strong>{{ auth.user()?.name }}</strong></span>
+      </div>
+
+      <div class="actions">
+        <app-notification-bell />
+        <div class="user">
+          <div class="avatar">{{ initials() }}</div>
+          <div class="who">
+            <strong>{{ auth.user()?.name }}</strong>
+            <span>{{ auth.user()?.role === 'manager' ? 'Manager' : 'Employee' }} · {{ auth.user()?.department }}</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" (click)="auth.logout()">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

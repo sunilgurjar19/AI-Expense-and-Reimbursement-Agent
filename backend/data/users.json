@@ -1,0 +1,38 @@
+[
+  {
+    "id": "u-1001",
+    "username": "employee",
+    "password": "employee123",
+    "name": "Aarav Sharma",
+    "email": "aarav.sharma@acme.example",
+    "role": "employee",
+    "department": "Product Engineering",
+    "employee_code": "EMP-1001",
+    "manager_id": "u-2001",
+    "cost_center": "CC-ENG-401"
+  },
+  {
+    "id": "u-1002",
+    "username": "priya",
+    "password": "priya123",
+    "name": "Priya Nair",
+    "email": "priya.nair@acme.example",
+    "role": "employee",
+    "department": "Sales",
+    "employee_code": "EMP-1002",
+    "manager_id": "u-2001",
+    "cost_center": "CC-SAL-210"
+  },
+  {
+    "id": "u-2001",
+    "username": "manager",
+    "password": "manager123",
+    "name": "Sunil Gurjar",
+    "email": "sunil.gurjar@acme.example",
+    "role": "manager",
+    "department": "Product Engineering",
+    "employee_code": "EMP-2001",
+    "manager_id": null,
+    "cost_center": "CC-ENG-401"
+  }
+]

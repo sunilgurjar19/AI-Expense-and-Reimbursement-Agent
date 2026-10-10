@@ -1,0 +1,76 @@
+@let r = receipt();
+<article class="receipt card card-hover" [class.excluded]="r.excluded" [class.failed]="r.status === 'failed'"
+         [class.attention]="r.status === 'needs_info' || r.status === 'questionable'" (click)="open.emit()"
+         tabindex="0" (keydown.enter)="open.emit()">
+  <div class="thumb" [class.scanning]="processing()">
+    @if (isImage()) {
+      <img [src]="fileUrl()" [alt]="r.file_name" loading="lazy" />
+    } @else {
+      <div class="pdf"><span>PDF</span></div>
+    }
+    @if (processing()) {
+      <div class="scan-line"></div>
+      <div class="scan-label"><span class="spinner"></span> {{ stageLabel() }}…</div>
+    }
+    <div class="pill-wrap"><app-status-pill [receiptStatus]="r.status" /></div>
+  </div>
+
+  <div class="body">
+    @if (processing()) {
+      <div class="pipeline">
+        @for (step of pipeline; track step.stage; let i = $index) {
+          <span class="step" [class.done]="i < stageIndex()" [class.now]="i === stageIndex()" [title]="step.label">
+            {{ step.icon }}
+          </span>
+        }
+      </div>
+      <div class="progress"><div class="bar" [style.width.%]="r.progress"></div></div>
+      <p class="file">{{ r.file_name }}</p>
+    } @else {
+      <div class="row top">
+        <div class="vendor">
+          <span class="cat-icon">{{ category()?.icon ?? '🧾' }}</span>
+          <div>
+            <strong>{{ r.data.vendor ?? r.file_name }}</strong>
+            <small>{{ category()?.label ?? 'Uncategorised' }} · {{ r.data.date ? (r.data.date | date: 'dd MMM yyyy') : 'no date' }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row amounts">
+        <div class="amount">
+          @if (r.data.total_amount !== null) {
+            <strong>{{ r.data.total_amount | money: (r.data.currency ?? currency()) }}</strong>
+            @if (r.data.currency && r.data.currency !== currency() && r.amount_in_base !== null) {
+              <small>≈ {{ r.amount_in_base | money: currency() }}</small>
+            }
+          } @else {
+            <strong class="missing">Amount needed</strong>
+          }
+        </div>
+        @if (capped()) {
+          <span class="capped" title="Reimbursement capped by policy">
+            pays {{ r.reimbursable_amount | money: currency() }}
+          </span>
+        }
+      </div>
+
+      @if (r.status === 'failed') {
+        <p class="error">⛔ {{ r.error }}</p>
+      } @else if (topFlags().length) {
+        <div class="flags">
+          @for (f of topFlags(); track f.code) {
+            <span class="flag" [class]="'flag ' + f.severity" [title]="f.message">{{ f.message }}</span>
+          }
+        </div>
+      } @else if (r.missing_fields.length) {
+        <div class="flags"><span class="flag warning">Missing: {{ r.missing_fields.join(', ') }}</span></div>
+      }
+    }
+  </div>
+  <footer class="doc-actions">
+    <span class="doc-name" [title]="r.file_name">📎 {{ r.file_name }}</span>
+    <button type="button" class="doc-btn" title="View document" (click)="$event.stopPropagation(); view.emit()">👁 View</button>
+    <a class="doc-btn" [href]="downloadUrl()" download title="Download document" (click)="$event.stopPropagation()">⬇</a>
+  </footer>
+</article>
