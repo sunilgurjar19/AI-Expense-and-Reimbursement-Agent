@@ -1,0 +1,235 @@
+1
+00:00:00,700 --> 00:00:03,674
+Meet Rika: an AI agent that turns a pile of
+
+2
+00:00:03,674 --> 00:00:06,925
+receipts into a submission-ready expense claim.
+
+3
+00:00:09,233 --> 00:00:13,788
+Filing expenses is still painful. People type every bill in by hand,
+
+4
+00:00:13,788 --> 00:00:18,275
+look up policy limits, and claims bounce back for a missing detail,
+
+5
+00:00:18,275 --> 00:00:21,758
+a duplicate, or an item that was never reimbursable.
+
+6
+00:00:22,208 --> 00:00:26,204
+And in India, many bills are printed in regional languages,
+
+7
+00:00:26,204 --> 00:00:27,558
+or even handwritten.
+
+8
+00:00:29,667 --> 00:00:31,728
+Rika does that work instead.
+
+9
+00:00:31,728 --> 00:00:35,630
+An Angular app talks to a FastAPI back end over REST,
+
+10
+00:00:35,630 --> 00:00:37,692
+and live server-sent events.
+
+11
+00:00:38,142 --> 00:00:41,126
+A vision language model reads each document,
+
+12
+00:00:41,126 --> 00:00:45,265
+deterministic checks verify the reading, and a policy engine,
+
+13
+00:00:45,265 --> 00:00:50,217
+a duplicate detector and a question engine get the claim ready to submit.
+
+14
+00:00:52,638 --> 00:00:54,176
+Let's sign in as Aarav,
+
+15
+00:00:54,176 --> 00:00:57,788
+an engineer just back from a client trip to Bengaluru.
+
+16
+00:00:58,139 --> 00:01:02,215
+His dashboard shows drafts in progress, money on its way,
+
+17
+00:01:02,215 --> 00:01:03,789
+and spend by category.
+
+18
+00:01:05,002 --> 00:01:08,552
+He starts a new claim, and Rika greets him in the chat.
+
+19
+00:01:08,902 --> 00:01:13,253
+He drops in all seven files at once: a flight, a hotel invoice,
+
+20
+00:01:13,253 --> 00:01:18,502
+two cab receipts, a team dinner, a coffee, and a phone photo of a café bill.
+
+21
+00:01:19,600 --> 00:01:23,415
+Each receipt now runs through a live pipeline: reading,
+
+22
+00:01:23,415 --> 00:01:28,617
+extraction by a vision language model, a double-check pass, categorisation,
+
+23
+00:01:28,617 --> 00:01:31,600
+policy validation, and duplicate detection.
+
+24
+00:01:32,150 --> 00:01:36,034
+This is Google's Gemma 3, a four-billion-parameter model,
+
+25
+00:01:36,034 --> 00:01:40,464
+running locally through Ollama, so no document leaves the laptop.
+
+26
+00:01:40,464 --> 00:01:45,575
+The same pipeline can switch to Claude, or to a fully offline rules engine.
+
+27
+00:01:46,795 --> 00:01:51,595
+A few minutes later, everything is read, and organised by category.
+
+28
+00:01:51,796 --> 00:01:54,621
+Rika capped the hotel at the lodging limit,
+
+29
+00:01:55,121 --> 00:01:59,471
+deducted the craft beer from the dinner bill as non-reimbursable,
+
+30
+00:01:59,973 --> 00:02:03,048
+flagged the second Uber receipt as a duplicate,
+
+31
+00:02:03,549 --> 00:02:06,524
+and read the photographed café bill correctly.
+
+32
+00:02:07,130 --> 00:02:11,054
+It also titled the claim, and wrote the remarks for the approver,
+
+33
+00:02:11,054 --> 00:02:12,805
+from the receipts themselves.
+
+34
+00:02:13,405 --> 00:02:18,255
+Instead of a long form, Rika asks only what it can't work out by itself.
+
+35
+00:02:18,455 --> 00:02:21,380
+A one-line justification for the hotel,
+
+36
+00:02:23,073 --> 00:02:25,398
+and whether to drop the duplicate.
+
+37
+00:02:25,699 --> 00:02:27,983
+Every answer re-runs all the checks,
+
+38
+00:02:27,983 --> 00:02:30,774
+and readiness climbs to one hundred percent.
+
+39
+00:02:31,370 --> 00:02:36,020
+Aarav can also just ask. Rika answers from the live claim data.
+
+40
+00:02:43,869 --> 00:02:48,519
+He reviews the summary, including the policy adjustments, and submits.
+
+41
+00:02:51,413 --> 00:02:54,712
+The mock finance system issues a reference number,
+
+42
+00:02:54,712 --> 00:02:57,088
+and routes the claim to his manager.
+
+43
+00:02:57,713 --> 00:03:01,893
+Now Meera, his manager, signs in. A notification is waiting,
+
+44
+00:03:01,893 --> 00:03:04,888
+and her approval queue shows the new claim.
+
+45
+00:03:08,636 --> 00:03:12,336
+Every receipt, flag and attachment is in one place.
+
+46
+00:03:14,660 --> 00:03:17,010
+She adds a comment, and approves.
+
+47
+00:03:20,170 --> 00:03:24,395
+Back on Aarav's side, live notifications track every step.
+
+48
+00:03:27,120 --> 00:03:29,888
+Moments later, finance pays out the claim,
+
+49
+00:03:29,888 --> 00:03:32,920
+and the timeline keeps a complete audit trail.
+
+50
+00:03:36,077 --> 00:03:40,120
+The AI engine can be switched at runtime between Ollama, Claude,
+
+51
+00:03:40,120 --> 00:03:43,152
+and the offline engine, with live health checks.
+
+52
+00:03:43,664 --> 00:03:48,714
+Categories, limits and rules all live in configuration, not in code.
+
+53
+00:03:50,533 --> 00:03:53,565
+Under the hood: self-verifying extraction,
+
+54
+00:03:53,565 --> 00:03:58,402
+a deterministic policy engine so the model never decides the money,
+
+55
+00:03:58,402 --> 00:04:00,857
+duplicate detection across claims,
+
+56
+00:04:00,857 --> 00:04:04,033
+and automatic fallback between AI providers.
+
+57
+00:04:04,483 --> 00:04:08,703
+And all of it is covered by a comprehensive suite of unit tests,
+
+58
+00:04:08,703 --> 00:04:11,208
+across the back end and the front end.
+
+59
+00:04:13,733 --> 00:04:17,833
+Rika. Receipts in, reimbursement out. Thanks for watching!

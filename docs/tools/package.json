@@ -1,0 +1,9 @@
+{
+  "name": "design-doc-tools",
+  "private": true,
+  "description": "Renders docs/TECHNICAL_DESIGN.md (with Mermaid diagrams) to PDF - see render_pdf.py",
+  "dependencies": {
+    "marked": "^14.1.4",
+    "mermaid": "^11.17.2"
+  }
+}
