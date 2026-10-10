@@ -4,7 +4,7 @@
 
 | Deliverable | Where |
 |---|---|
-| 🎬 **Demo video** | YouTube: **`(https://www.youtube.com/watch?v=R_W8TpmYaWE)`** (4:20, narrated and captioned, also in [`docs/demo/`](docs/demo/)) |
+| 🎬 **Demo video** | YouTube: **[`https://www.youtube.com/watch?v=R_W8TpmYaWE`](https://www.youtube.com/watch?v=R_W8TpmYaWE)** (4:20, narrated and captioned, also in [`docs/demo/`](docs/demo/)) |
 | 📄 **Technical design document** | [`docs/TECHNICAL_DESIGN.md`](docs/TECHNICAL_DESIGN.md) (renders on GitHub with diagrams) · [PDF](docs/TECHNICAL_DESIGN.pdf) |
 | 🧪 **Unit tests** | **831** backend tests (pytest, 100 % statement coverage) · **536** frontend tests (Vitest, 100 % lines), all passing. See [Testing](#testing) |
 | 🌐 **Hosted instance** | Not hosted. Runs locally in about 5 minutes, see [Quick start](#quick-start) |
